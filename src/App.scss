@@ -1,0 +1,11 @@
+.root-layout {
+  nav {
+    a {
+      color: #000;
+
+      &.active {
+        color: red;
+      }
+    }
+  }
+}
