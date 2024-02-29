@@ -1,21 +1,19 @@
 import React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
-const Pagination = ({count, page, pages, handlePagination}) => {
+
+const PaginationComponent = ({count, page, handlePagination}) => {
     return (
         <div>
-            <button disabled={page === 1} onClick={() => handlePagination(page, 'prev')}>prev</button>
-            {
-                pages.map((pageCount, idx) =>
-                    <button
-                        key={idx}
-                        style={pageCount === page ? {background: "green"} : {}}
-                        onClick={() => handlePagination(pageCount)}>
-                        {pageCount}
-                    </button>)
-            }
-            <button disabled={page === count} onClick={() => handlePagination(page, 'next')}>next</button>
+            <Stack spacing={2}>
+                <Pagination
+                    page={page}
+                    onChange={(_, num)=> handlePagination(num)}
+                    count={count} color="secondary" />
+            </Stack>
         </div>
     );
 };
 
-export default Pagination;
+export default PaginationComponent;

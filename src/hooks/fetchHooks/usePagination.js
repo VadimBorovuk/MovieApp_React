@@ -4,13 +4,8 @@ export default function usePagination(current) {
 
     const [page, setPage] = useState(current)
 
-    const handlePage = useCallback((page, count) => {
-        if (!count) {
-            setPage(page)
-        } else {
-            setPage(prev => prev + count)
-        }
-
+    const handlePage = useCallback((page) => {
+        setPage(page)
     }, [])
 
     return [page, handlePage]

@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 
-export default function useQuery(queryData){
-    const [query, setQuery] = useState('')
+export default function useQuery(queryData) {
+    const [query, setQueryData] = useState('')
 
     useEffect(() => {
-        setQuery(new URLSearchParams(queryData))
-    }, [queryData._page]);
+        setQueryData(queryData)
+    }, [queryData.page, queryData.query]);
 
     return query
 }

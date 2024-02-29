@@ -1,5 +1,6 @@
 import React from 'react';
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import PrivateRoutes from "../router/privateRoutes";
 
 const RootLayout = () => {
 
@@ -14,11 +15,10 @@ const RootLayout = () => {
                         return isActive ? 'active' : ''
                     }}
                 >
-                    About
                 </NavLink>
             </nav>
             <main>
-                <Outlet/>
+               <PrivateRoutes/>
             </main>
         </div>
     );
