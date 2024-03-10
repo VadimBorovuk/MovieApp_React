@@ -1,11 +1,12 @@
-import {Navigate, Outlet} from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {useAuth} from "../hooks/useAuth/use-auth";
+import ContentView from "../components/ContentView/ContentView";
 
 const PrivateRoutes = () => {
-
-    const auth = true
+    const {isAuth} = useAuth()
 
     return (
-        auth ? <Outlet/> : <Navigate to="login"/>
+        isAuth ? <ContentView/> : <Navigate to="login"/>
     );
 };
 

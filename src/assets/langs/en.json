@@ -1,4 +1,7 @@
 {
-  "t.title": "Welcome to React and Films app",
-  "t.desc": "Describe page"
+  "t.pages.main": "Movies",
+  "t.pages.top": "Top movies",
+  "t.pages.favorite": "Favorite movies",
+  "t.settings.profile": "Profile",
+  "t.settings.logout": "Logout"
 }

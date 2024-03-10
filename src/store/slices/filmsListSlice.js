@@ -12,11 +12,19 @@ const initialState = {
     },
 }
 
+export const fetchTopFilms = createAsyncThunk('fetchTopFilms', (params) => {
+    const url = `${process.env.REACT_APP_API_PATH}/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}`
+    return axios
+        .get(url, {params})
+        .then((response) => response.data)
+})
 
-export const fetchFilms = createAsyncThunk('fetchFilms', (params) => {
+// with_genres=27,35
+export const fetchDiscoverFilms = createAsyncThunk('fetchDiscoverFilms', (params) => {
+    const url =  `${process.env.REACT_APP_API_PATH}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}`
 
     return axios
-        .get(`${process.env.REACT_APP_API_PATH}/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`, {params})
+        .get(url, {params})
         .then((response) => response.data)
 })
 
@@ -27,19 +35,19 @@ export const searchFilms = createAsyncThunk('searchFilms', (params) => {
         .then((response) => response.data)
 })
 
-const filmsPopularSlice = createSlice({
+const filmsSlice = createSlice({
     name: 'films',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(fetchFilms.pending, state => {
+        builder.addCase(fetchTopFilms.pending, state => {
             state.loading = true
         })
-        builder.addCase(fetchFilms.fulfilled, (state, action) => {
+        builder.addCase(fetchTopFilms.fulfilled, (state, action) => {
             state.loading = false
             const {results, page, total_pages, total_results} = action.payload
             state.films = {page, total_pages, total_results, results}
         })
-        builder.addCase(fetchFilms.rejected, (state, action) => {
+        builder.addCase(fetchTopFilms.rejected, (state, action) => {
             state.loading = false
             state.films = {
                 page: null,
@@ -49,16 +57,18 @@ const filmsPopularSlice = createSlice({
             }
             state.error = action.error.message
         })
-        
-        builder.addCase(searchFilms.pending, state => {
+
+
+
+        builder.addCase(fetchDiscoverFilms.pending, state => {
             state.loading = true
         })
-        builder.addCase(searchFilms.fulfilled, (state, action) => {
+        builder.addCase(fetchDiscoverFilms.fulfilled, (state, action) => {
             state.loading = false
             const {results, page, total_pages, total_results} = action.payload
             state.films = {page, total_pages, total_results, results}
         })
-        builder.addCase(searchFilms.rejected, (state, action) => {
+        builder.addCase(fetchDiscoverFilms.rejected, (state, action) => {
             state.loading = false
             state.films = {
                 page: null,
@@ -72,4 +82,4 @@ const filmsPopularSlice = createSlice({
 })
 
 
-export default filmsPopularSlice.reducer
+export default filmsSlice.reducer

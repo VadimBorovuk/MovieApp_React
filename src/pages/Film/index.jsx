@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchCurrentFilm} from "../../../../store/slices/filmCurrentSlice";
+import {fetchCurrentFilm} from "../../store/slices/filmCurrentSlice";
 
-import ImageCamp from '../../../../assets/camp.png'
+import {CircularProgress} from "@mui/material";
 
 // const TemplateTitle = ({className, children}) => (
 //     <h2 className={className}>
@@ -24,6 +24,7 @@ const FilmItem = styled.div`
 `
 
 const Film = () => {
+
     const {current, loading, error} = useSelector(state => state.sliceCurrentFilm)
     const dispatch = useDispatch()
 
@@ -31,18 +32,18 @@ const Film = () => {
     // const [currentFilm, setCurrentFilm] = useState({})
 
     useEffect(() => {
-        dispatch(fetchCurrentFilm(id))
+        dispatch(fetchCurrentFilm({id, language: localStorage.getItem('lang')}))
     }, [id]);
 
     return (
         <FilmItem>
             {error ? error : <div>
-                {loading ? 'Loading...' : <div>
-                    <img src={ImageCamp} alt="camp"/>
+                {loading ? <CircularProgress/> : <div>
                     <img
                         style={{height: 200, width: 200}}
                         src={`${process.env.REACT_APP_API_PATH_IMAGE}/${current.poster_path}`} alt="not found"/>
                     <h2>{current.title}</h2>
+                    <p>{current.overview}</p>
                 </div>
                 }
             </div>

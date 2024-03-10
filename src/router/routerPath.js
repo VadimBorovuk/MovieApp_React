@@ -1,30 +1,47 @@
 import {createBrowserRouter} from "react-router-dom";
 
-import PageNotFound from "../pages/404/index";
-import RootLayout from "../layouts/RootLayout";
-import Films from "../pages/Films/Films";
-import Film from "../pages/Films/components/Film";
-import Home from "../pages/Home/Home";
+import {lazy} from "react";
+
+const RootLayoutLazy = lazy(() => import("../layouts/RootLayout"))
+const PageNotFoundLazy = lazy(() => import("../pages/404/index"))
+const FavoriteFilmsLazy = lazy(() => import("../pages/FavoriteFilms/FavoriteFilms"))
+const TopFilmsLazy = lazy(() => import("../pages/TopFilms/TopFilms"))
+const DiscoverLazy = lazy(() => import("../pages/DiscoverFilm/Discover"))
+const FilmPageLazy = lazy(() => import("../pages/Film"))
+const SignInLazy = lazy(() => import("../pages/SignIn"))
+const SignUpLazy = lazy(() => import("../pages/SignUp"))
+
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <RootLayout/>,
-        errorElement: <PageNotFound/>,
+        element: <RootLayoutLazy/>,
+        errorElement: <PageNotFoundLazy/>,
         children: [
             {
-                path: "films",
-                element: <Films />,
+                path: "/",
+                element: <DiscoverLazy/>,
             },
             {
-                path: "films/:id",
-                element: <Film />,
+                path: "top",
+                element: <TopFilmsLazy/>,
+            },
+            {
+                path: "favorite",
+                element: <FavoriteFilmsLazy/>,
+            },
+            {
+                path: "film/:id",
+                element: <FilmPageLazy/>,
             },
         ]
     },
     {
         path: "login",
-        element: <Home/>
+        element: <SignInLazy/>
+    },
+    {
+        path: "register",
+        element: <SignUpLazy/>
     }
-
 ]);

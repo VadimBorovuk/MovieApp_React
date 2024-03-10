@@ -1,0 +1,57 @@
+
+.single-img {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  float: left;
+  border-radius: 10px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.img-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .7);
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+  border-radius: 10px;
+}
+
+.single-img:hover .img-overlay {
+  height: 50%;
+}
+
+.single-img:hover .image {
+  box-shadow: 0px -5px 20px #1976d2
+}
+
+.text {
+  margin-bottom: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-family: poppins;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.text span {
+  font-weight: 300;
+}
+
+
+.line:last-child {
+  display: none;
+}

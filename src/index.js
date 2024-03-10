@@ -4,16 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./store";
+import './firebase'
 import i118Lang from "./utils/i118Lang";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <App/>
+    </Provider>
 );
 
 reportWebVitals();

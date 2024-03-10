@@ -1,4 +1,7 @@
 {
-  "t.title": "Ласкаво просимо в додаток фільмів",
-  "t.desc": "Опис сторінки"
+  "t.pages.main": "Фільми",
+  "t.pages.top": "ТОП фільмів",
+  "t.pages.favorite": "Улюблені фільми",
+  "t.settings.profile": "Прифіль",
+  "t.settings.logout": "Вихід"
 }

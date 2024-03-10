@@ -8,9 +8,11 @@ const initialState = {
 }
 
 
-export const fetchCurrentFilm = createAsyncThunk('fetchCurrentFilm', (id) => {
+export const fetchCurrentFilm = createAsyncThunk('fetchCurrentFilm', ({id, language}) => {
+    const url = `${process.env.REACT_APP_API_PATH}/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=${language}`
+
     return axios
-        .get(`${process.env.REACT_APP_API_PATH}/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`)
+        .get(url)
         .then((response) => response.data)
 })
 
