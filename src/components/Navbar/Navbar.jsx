@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import MovieIcon from '@mui/icons-material/Movie';
 import StarsIcon from '@mui/icons-material/Stars';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -116,7 +117,12 @@ const Navbar = () => {
 
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (<LinkItem to={page.path} key={page.path}>
-                                <StarsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                                {
+                                    page.name === 'top' ?
+                                        <StarsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                                        :  <FavoriteIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                                }
+
                                 {t(`t.pages.${page.name}`)}
                             </LinkItem>
                         ))}
