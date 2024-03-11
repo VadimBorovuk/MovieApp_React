@@ -2,15 +2,24 @@ import React, {Suspense, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
-import {Backdrop, Box, CircularProgress} from "@mui/material";
+import {Backdrop, CircularProgress, Container} from "@mui/material";
 import View from "../../components/FilmsView/View";
 import {fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
+import {fetchGenres} from "../../store/slices/genreListSlice";
+import styled from "styled-components";
 
+const ContentBlock = styled(Container)`
+    border-radius: 25px;
+    width: 100%;
+    padding: 25px 0;
+    background-color: #354160;
+`
 
 const FavoritePage = () => {
     const [loader, setLoader] = useState(true)
+    const {genres} = useSelector(state => state.sliceGenreList)
 
-    const {films, loading, error} = useSelector(state => state.sliceFavoriteFilms)
+    const {films, loading} = useSelector(state => state.sliceFavoriteFilms)
     const dispatch = useDispatch()
 
     // const count = 300 / 20
@@ -26,11 +35,13 @@ const FavoritePage = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchFavoriteFilms(query))
-        setTimeout(() => {
-            setLoader(false)
-        }, 500)
-        setLoader(true)
+        if(query){
+            dispatch(fetchFavoriteFilms(query))
+            setTimeout(() => {
+                setLoader(false)
+            }, 500)
+            setLoader(true)
+        }
     }, [query])
 
     return (
@@ -46,15 +57,16 @@ const FavoritePage = () => {
 
                 <div>
                     {loading ? <>loading...</> :
-                        <div className="content">
+                        <ContentBlock maxWidth="xl">
                             <View
                                 title="favorite"
                                 page={page}
                                 pages={pages}
+                                genres={genres}
                                 handlePagination={handlePagination}
                                 films={films}
                             />
-                        </div>
+                        </ContentBlock>
                     }
                 </div>
 

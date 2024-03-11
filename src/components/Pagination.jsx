@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import styled from "styled-components";
 
 const PaginationView = styled(Pagination)`
-    margin: 0 auto 25px;
+    margin: 25px auto;
     display: flex;
     justify-content: center;
     align-items: center;

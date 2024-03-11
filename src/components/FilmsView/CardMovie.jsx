@@ -40,12 +40,15 @@ const RatingInfoStyled = styled.div`
 const GenresStyled = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 7px 0;
 `
-const GenreStyled = styled.div`
+const GenreStyled = styled.span`
     color: #fff;
     font-size: 13px;
     margin-right: 5px;
+    margin-bottom: 5px;
     background-color: rgba(255, 255, 255, .5);
     border-radius: 20px;
     padding: 4px 8px;
@@ -76,20 +79,23 @@ const CardMovie = ({title, addToFavorite, film, genres}) => {
                 className="image"
                 src={`${process.env.REACT_APP_API_PATH_IMAGE}/${film.poster_path}`}
                 alt="not found"/>
-            {title !== 'favorite' ? <RatingStyled
-                max={1}
-                onChange={(event, newValue) => {
-                    addToFavorite(newValue, film.id);
-                }}
-                emptyIcon={<StarIcon style={{opacity: 0.55}}
-                                     fontSize="inherit"/>}
-            /> : ''}
+
+            {title !== 'favorite' ?
+                <RatingStyled
+                    max={1}
+                    onChange={(event, newValue) => {
+                        addToFavorite(newValue, film.id);
+                    }}
+                    emptyIcon={<StarIcon style={{opacity: 0.55}}
+                                         fontSize="inherit"/>}
+                /> : ''
+            }
             <LinkItem className="img-overlay" to={`/film/${film.id}`}>
                 <DescriptionStyled>
                     <p className="text">{film.title}</p>
 
                     <GenresStyled>
-                        {getGenre(film).map(item => (<GenreStyled key={item}>{item}</GenreStyled>))}
+                        {getGenre(film).map((item, idx) => (<GenreStyled key={idx}>{item}</GenreStyled>))}
                     </GenresStyled>
 
                     <RatingInfoStyled>

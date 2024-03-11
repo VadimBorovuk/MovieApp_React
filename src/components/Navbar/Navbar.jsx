@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {removeUser} from "../../store/slices/userSlice";
@@ -20,6 +20,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {Container, createTheme, ThemeProvider} from "@mui/material";
 import styled from "styled-components";
 import DrawerUI from '../UI/DrawerUi'
+import {fetchGenres} from "../../store/slices/genreListSlice";
 
 
 const theme = createTheme({
@@ -101,6 +102,12 @@ const Navbar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    useEffect(() => {
+        dispatch(fetchGenres({
+            language: localStorage.getItem('lang')
+        }))
+    }, []);
 
     return <ThemeProvider theme={theme}>
         <AppBar position="static" color="ochre"

@@ -2,19 +2,19 @@ import React, {useEffect} from 'react';
 import {Container, Grid} from "@mui/material";
 import styled from "styled-components";
 import Pagination from "../Pagination";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {AddFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
 import CardMovie from "./CardMovie";
-import {fetchGenres} from "../../store/slices/genreListSlice";
+import SelectGenres from "../UI/SelectGenres";
 
 const ContentBlock = styled(Container)`
     border-radius: 25px;
+    width: 100%;
     padding: 25px 0;
     background-color: #354160;
 `
 
-const View = ({title, films, page, pages, handlePagination}) => {
-    const {genres, loading, error} = useSelector(state => state.sliceGenreList)
+const View = ({title, films, page, pages, handlePagination, genres}) => {
 
     const dispatch = useDispatch()
 
@@ -37,27 +37,16 @@ const View = ({title, films, page, pages, handlePagination}) => {
         })
     }
 
-    useEffect(() => {
-        dispatch(fetchGenres())
-    }, []);
 
     return (
-        <ContentBlock maxWidth="xl">
-            {
-                +films.total_results < 20 ? <></> : <Pagination
-                    count={+films.total_pages}
-                    page={page}
-                    pages={pages}
-                    handlePagination={handlePagination}
-                />
-            }
-
+        <div>
             {
                 title === 'favorite' ?
-                    <button onClick={() => clearAll()}>
+                    <button style={{marginBottom: 25}} onClick={() => clearAll()}>
                         clear all
                     </button>
-                    : ''
+                    : <div>
+                    </div>
             }
 
             <Grid container spacing={2}>
@@ -72,7 +61,16 @@ const View = ({title, films, page, pages, handlePagination}) => {
                     </Grid>
                 })}
             </Grid>
-        </ContentBlock>
+
+            {
+                +films.total_results < 20 ? <></> : <Pagination
+                    count={+films.total_pages}
+                    page={page}
+                    pages={pages}
+                    handlePagination={handlePagination}
+                />
+            }
+        </div>
     )
 };
 

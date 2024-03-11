@@ -8,9 +8,11 @@ const initialState = {
 }
 
 
-export const fetchGenres = createAsyncThunk('fetchGenres', () => {
+export const fetchGenres = createAsyncThunk('fetchGenres', (params) => {
+    const url = `${process.env.REACT_APP_API_PATH}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`
+
     return axios
-        .get(`${process.env.REACT_APP_API_PATH}/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`)
+        .get(url, {params})
         .then((response) => response.data)
 })
 

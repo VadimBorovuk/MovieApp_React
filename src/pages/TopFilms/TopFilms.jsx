@@ -3,11 +3,21 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchTopFilms} from "../../store/slices/filmsListSlice";
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
-import {Backdrop, CircularProgress} from "@mui/material";
+import {Backdrop, CircularProgress, Container} from "@mui/material";
 import View from "../../components/FilmsView/View";
+import styled from "styled-components";
+
+const ContentBlock = styled(Container)`
+    border-radius: 25px;
+    width: 100%;
+    padding: 25px 0;
+    background-color: #354160;
+`
 
 const TopFilmsPage = () => {
+
     const [loader, setLoader] = useState(true)
+    const {genres} = useSelector(state => state.sliceGenreList)
 
     const {films, loading, error} = useSelector(state => state.sliceFilms)
     const dispatch = useDispatch()
@@ -27,12 +37,11 @@ const TopFilmsPage = () => {
     useEffect(() => {
         if(query){
             dispatch(fetchTopFilms(query))
+            setTimeout(() => {
+                setLoader(false)
+            }, 500)
+            setLoader(true)
         }
-
-        setTimeout(() => {
-            setLoader(false)
-        }, 500)
-        setLoader(true)
     }, [query])
 
     return (
@@ -46,12 +55,13 @@ const TopFilmsPage = () => {
                     <CircularProgress color="inherit"/>
                 </Backdrop>
 
-                <div>
+                <ContentBlock maxWidth="xl">
                     {error ? error : <div>
                         {loading ? <>loading...</> : <div className="content">
                             <View
                                 page={page}
                                 pages={pages}
+                                genres={genres}
                                 handlePagination={handlePagination}
                                 films={films}
                             />
@@ -59,7 +69,7 @@ const TopFilmsPage = () => {
                         }
                     </div>
                     }
-                </div>
+                </ContentBlock>
 
             </Suspense>
         </div>
