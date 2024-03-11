@@ -37,8 +37,8 @@ const LinkItem = styled(NavLink)`
     text-decoration: none;
     font-size: 16px;
     color: #fff;
-    
-    &.active{
+
+    &.active {
         background: white;
         border-radius: 15px;
         padding: 5px 7px;
@@ -80,8 +80,10 @@ const Navbar = () => {
     }
 
     const goPathNavigate = (item) => {
-        if (item.path === 'logout') {
+        if (item === 'logout') {
+
             dispatch(removeUser())
+
         } else {
             navigate('/')
         }
@@ -123,7 +125,7 @@ const Navbar = () => {
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                               <AccountCircleIcon/>
+                                <AccountCircleIcon/>
                             </IconButton>
                         </Tooltip>
                         <div>

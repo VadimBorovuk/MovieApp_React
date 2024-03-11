@@ -25,7 +25,10 @@ const TopFilmsPage = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchTopFilms(query))
+        if(query){
+            dispatch(fetchTopFilms(query))
+        }
+
         setTimeout(() => {
             setLoader(false)
         }, 500)
@@ -46,7 +49,6 @@ const TopFilmsPage = () => {
                 <div>
                     {error ? error : <div>
                         {loading ? <>loading...</> : <div className="content">
-
                             <View
                                 page={page}
                                 pages={pages}
