@@ -17,37 +17,51 @@ const MenuProps = {
         },
     },
 };
-function getStyles(name, genreName, theme) {
+
+const years = [
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+]
+
+function getStyles(name, yearLabel, theme) {
     return {
         fontWeight:
-            genreName.indexOf(name) === -1
+            yearLabel.indexOf(name) === -1
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium,
     };
 }
- const SelectGenres = ({genreName, handleChange, genres}) => {
+const SelectYears = ({yearLabel, handleChange}) => {
     const theme = useTheme();
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Select genres</InputLabel>
+                <InputLabel id="demo-multiple-name-label">Select year</InputLabel>
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    value={genreName}
+                    value={yearLabel}
                     onChange={handleChange}
-                    input={<OutlinedInput label="Select genres" />}
+                    input={<OutlinedInput label="Select year" />}
                     MenuProps={MenuProps}
                 >
-                    {genres && genres.map((genre) => (
+                    {years && years.map((year) => (
                         <MenuItem
-                            key={genre.id}
-                            value={genre.id}
-                            style={getStyles(genre.name, genreName, theme)}
+                            key={year}
+                            value={year}
+                            style={getStyles(year, yearLabel, theme)}
                         >
-                            {genre.name}
+                            {year}
                         </MenuItem>
                     ))}
                 </Select>
@@ -56,4 +70,4 @@ function getStyles(name, genreName, theme) {
     );
 }
 
-export default SelectGenres
+export default SelectYears

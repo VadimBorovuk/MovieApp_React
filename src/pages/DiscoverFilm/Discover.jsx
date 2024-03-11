@@ -8,6 +8,7 @@ import {Backdrop, CircularProgress, Container} from "@mui/material";
 import View from "../../components/FilmsView/View";
 import SelectGenres from "../../components/UI/SelectGenres";
 import styled from "styled-components";
+import SelectYears from "../../components/UI/SelectYears";
 
 const ContentBlock = styled(Container)`
     border-radius: 25px;
@@ -29,44 +30,64 @@ const DiscoverPage = () => {
     }, [films])
 
     const [genreName, setGenreName] = useState([]);
-
-    const handleChange = (event) => {
-        const {target: { value }} = event;
-        setGenreName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-        dispatch(fetchDiscoverFilms({
-            page,
-            with_genres: value.toString(),
-            language: localStorage.getItem('lang'),
-            sort_by: 'vote_count.desc'
-        }))
-    };
+    const [yearLabel, setYearLabel] = useState([]);
 
     const query = useQuery({
         page,
         with_genres: genreName.toString(),
         language: localStorage.getItem('lang'),
-        sort_by: 'vote_count.desc'
+        sort_by: 'vote_count.desc',
+        year: '2015,2016'
     })
+
+    const handleChangeGenre = (event) => {
+        const {target: { value }} = event;
+        setGenreName(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        getDiscoverFilms({
+            ...query,
+            with_genres: value.toString(),
+            year: yearLabel.toString(),
+        })
+    };
+
+    const handleChangeYear = (event) => {
+        const {target: { value }} = event;
+        setYearLabel(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        getDiscoverFilms({
+            ...query,
+            year: value.toString(),
+            with_genres: genreName.toString()
+        })
+    };
+
+    const clearFilters = () => {
+        setYearLabel([])
+        setGenreName([])
+
+        getDiscoverFilms(query)
+    }
 
     const handlePagination = (page) => {
         handlePage(page)
     }
 
-    const getDiscoverFilms = useCallback(()=>{
-        if (query) {
-            dispatch(fetchDiscoverFilms(query))
+    const getDiscoverFilms = useCallback((params)=>{
+        if (params) {
+            dispatch(fetchDiscoverFilms(params))
             setTimeout(() => {
                 setLoader(false)
             }, 500)
             setLoader(true)
         }
-    }, [query])
+    }, [])
 
     useEffect(() => {
 
-        getDiscoverFilms()
+        getDiscoverFilms(query)
 
     }, [query])
 
@@ -87,8 +108,16 @@ const DiscoverPage = () => {
                             <SelectGenres
                                 genres={genres}
                                 genreName={genreName}
-                                handleChange={handleChange}
+                                handleChange={handleChangeGenre}
                             />
+                            <SelectYears
+                                yearLabel={yearLabel}
+                                handleChange={handleChangeYear}
+                            />
+                            <button style={{
+                                backgroundColor: 'blue',
+                                padding: '10px 20px'
+                            }} onClick={()=> clearFilters()}>clear</button>
                             <View
                                 page={page}
                                 pages={pages}
