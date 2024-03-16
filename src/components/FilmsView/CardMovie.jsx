@@ -1,66 +1,28 @@
-import React from 'react';
-import {Box, Rating} from "@mui/material";
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import StarIcon from "@mui/icons-material/Star";
-import styled from "styled-components";
-import {NavLink} from "react-router-dom";
+
+import {Rating} from "@mui/material";
 
 import './style.scss'
+import {
+    DescriptionStyled,
+    GenresStyled,
+    GenreStyled,
+    LinkItem,
+    RatingInfoStyled,
+    RatingStyled,
+    TextStyled
+} from "./styled";
+import moment from "moment";
+import {useLocation} from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Tooltip from "@mui/material/Tooltip";
 
-
-const LinkItem = styled(NavLink)`
-    text-decoration: none;
-    border-radius: 15px;
-`
-
-const DescriptionStyled = styled.div`
-    padding: 0 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-`
-
-const RatingStyled = styled(Rating)`
-    position: absolute !important;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    padding: 7px;
-    background-color: rgba(255, 255, 255, .5);
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-`
-
-const RatingInfoStyled = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const GenresStyled = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 7px 0;
-`
-const GenreStyled = styled.span`
-    color: #fff;
-    font-size: 13px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    background-color: rgba(255, 255, 255, .5);
-    border-radius: 20px;
-    padding: 4px 8px;
-`
-
-const TextStyled = styled.div`
-    margin-top: 10px;
-    font-size: 13px;
-    color: #fff;
-`
-
-const CardMovie = ({title, addToFavorite, film, genres}) => {
+const CardMovie = memo(({addToFavorite, film, genres}) => {
+    const [disableIcon, setDisableIcon] = useState(false)
+    const [switchTitle, setSwitchTitle] = useState('')
+    const location = useLocation()
 
     const getGenre = ({genre_ids}) => {
 
@@ -73,6 +35,24 @@ const CardMovie = ({title, addToFavorite, film, genres}) => {
 
     }
 
+    const changeIcon = (newValue) => {
+        setSwitchTitle(newValue)
+        setDisableIcon(true)
+        addToFavorite(
+            newValue,
+            film.id,
+            location.pathname !== '/favorite' ? 'change' : 'remove'
+        );
+        setTimeout(() => {
+            setDisableIcon(false)
+        }, location.pathname !== '/favorite' ? 500 : 2000)
+    }
+
+
+    const generateData = useMemo(() => {
+        return moment(film.release_date).format('DD.MM.YYYY')
+    }, [film.id])
+
     return (
         <div className="single-img">
             <img
@@ -80,19 +60,28 @@ const CardMovie = ({title, addToFavorite, film, genres}) => {
                 src={`${process.env.REACT_APP_API_PATH_IMAGE}/${film.poster_path}`}
                 alt="not found"/>
 
-            {title !== 'favorite' ?
+            <Tooltip title={location.pathname !== '/favorite' ? !switchTitle ? 'Add to favorite' : 'Remove from favorite' : 'Remove from favorite'}>
                 <RatingStyled
+                    disabled={disableIcon}
                     max={1}
-                    onChange={(event, newValue) => {
-                        addToFavorite(newValue, film.id);
-                    }}
-                    emptyIcon={<StarIcon style={{opacity: 0.55}}
-                                         fontSize="inherit"/>}
-                /> : ''
-            }
-            <LinkItem className="img-overlay" to={`/film/${film.id}`}>
+                    icon={
+                        location.pathname !== '/favorite' ?
+                            <FavoriteIcon fontSize="inherit"/> :
+                            <DeleteIcon style={{opacity: 0.55}} fontSize="inherit"/>
+                    }
+                    onChange={(event, newValue) => changeIcon(newValue)}
+                    emptyIcon={
+                        location.pathname !== '/favorite' ?
+                            <FavoriteIcon style={{opacity: 0.55}} fontSize="inherit"/> :
+                            <DeleteIcon style={{opacity: 0.55}} fontSize="inherit"/>
+                    }
+                />
+            </Tooltip>
+
+            <LinkItem className="img-overlay" to={`/film/${film.id}`} target="_blank">
                 <DescriptionStyled>
                     <p className="text">{film.title}</p>
+                    <p className="year">{generateData}</p>
 
                     <GenresStyled>
                         {getGenre(film).map((item, idx) => (<GenreStyled key={idx}>{item}</GenreStyled>))}
@@ -117,6 +106,6 @@ const CardMovie = ({title, addToFavorite, film, genres}) => {
             </LinkItem>
         </div>
     );
-};
+});
 
 export default CardMovie;

@@ -79,6 +79,7 @@ const Navbar = () => {
     const changeLang = (lang) => {
         localStorage.setItem('lang', lang)
         i18n.changeLanguage(lang)
+        window.location.reload()
     }
 
     const goPathNavigate = (item) => {

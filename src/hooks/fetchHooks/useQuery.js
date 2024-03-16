@@ -5,7 +5,7 @@ export default function useQuery(queryData) {
 
     useEffect(() => {
         setQueryData(queryData)
-    }, [queryData.page, queryData.query]);
+    }, [queryData.query]);
 
     return query
 }

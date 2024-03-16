@@ -1,53 +1,45 @@
-import React, {useEffect} from 'react';
-import {Container, Grid} from "@mui/material";
-import styled from "styled-components";
+import React, {useState} from 'react';
+import {Alert, Grid, Snackbar} from "@mui/material";
 import Pagination from "../Pagination";
 import {useDispatch} from "react-redux";
-import {AddFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
+import {AddFavoriteFilms, fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
 import CardMovie from "./CardMovie";
-import SelectGenres from "../UI/SelectGenres";
+import {useLocation} from "react-router-dom";
 
-const ContentBlock = styled(Container)`
-    border-radius: 25px;
-    width: 100%;
-    padding: 25px 0;
-    background-color: #354160;
-`
-
-const View = ({title, films, page, pages, handlePagination, genres}) => {
+const View = ({films, page, pages, handlePagination, genres}) => {
+    const location = useLocation()
+    const [message, setMessage] = useState(false)
 
     const dispatch = useDispatch()
 
-    const addToFavorite = (data, id) => {
+    const addToFavorite = (data, id, status) => {
         dispatch(AddFavoriteFilms({
             "media_type": "movie",
             "media_id": id,
-            "favorite": !!data
+            "favorite": status === 'change' ? !!data : false
         }))
+        setMessage(true)
+        setTimeout(() => {
+            dispatch(fetchFavoriteFilms({page: 1, language: localStorage.getItem('lang')}))
+        }, 1500)
     }
-
-
-    const clearAll = () => {
-        films.results.forEach(film => {
-            dispatch(AddFavoriteFilms({
-                "media_type": "movie",
-                "media_id": film.id,
-                "favorite": false
-            }))
-        })
-    }
-
 
     return (
         <div>
-            {
-                title === 'favorite' ?
-                    <button style={{marginBottom: 25}} onClick={() => clearAll()}>
-                        clear all
-                    </button>
-                    : <div>
-                    </div>
-            }
+            <Snackbar
+                open={message}
+                autoHideDuration={location.pathname !== '/favorite' ? 1000 : 2000}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                onClose={() => setMessage(false)}>
+                <Alert
+                    onClose={() => setMessage(false)}
+                    severity={location.pathname !== '/favorite' ? 'success' : 'error'}
+                    variant="filled"
+                    sx={{width: '100%'}}
+                >
+                    This is a success Alert inside a Snackbar!
+                </Alert>
+            </Snackbar>
 
             <Grid container spacing={2}>
                 {films && films.results.map(film => {
@@ -56,7 +48,6 @@ const View = ({title, films, page, pages, handlePagination, genres}) => {
                             addToFavorite={addToFavorite}
                             genres={genres}
                             film={film}
-                            title={title}
                         />
                     </Grid>
                 })}

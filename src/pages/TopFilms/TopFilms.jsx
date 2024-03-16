@@ -1,18 +1,11 @@
-import React, {Suspense, useEffect, useMemo, useState} from 'react';
+import React, {Suspense, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchTopFilms} from "../../store/slices/filmsListSlice";
+import {fetchDiscoverFilms, fetchTopFilms} from "../../store/slices/filmsListSlice";
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
 import {Backdrop, CircularProgress, Container} from "@mui/material";
 import View from "../../components/FilmsView/View";
-import styled from "styled-components";
-
-const ContentBlock = styled(Container)`
-    border-radius: 25px;
-    width: 100%;
-    padding: 25px 0;
-    background-color: #354160;
-`
+import {ContentBlock, ContentTop} from "./style";
 
 const TopFilmsPage = () => {
 
@@ -28,51 +21,62 @@ const TopFilmsPage = () => {
         return Array.from({length: films.total_pages}, (_, index) => index + 1)
     }, [films])
 
-    const query = useQuery({page})
+    const query = useQuery({
+        page,
+        language: localStorage.getItem('lang')
+    })
 
     const handlePagination = (page) => {
         handlePage(page)
+        getTopFilms({
+            ...query,
+            page
+        })
     }
 
-    useEffect(() => {
-        if(query){
-            dispatch(fetchTopFilms(query))
+    const getTopFilms = useCallback((params) => {
+        if (params) {
+            dispatch(fetchTopFilms(params))
             setTimeout(() => {
                 setLoader(false)
             }, 500)
             setLoader(true)
         }
+    }, [])
+
+
+    useEffect(() => {
+        getTopFilms(query)
     }, [query])
 
     return (
-        <div>
-            <Suspense fallback={<>...</>}>
+        <Suspense fallback={<>...</>}>
 
-                <Backdrop
-                    sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                    open={loader}
-                >
-                    <CircularProgress color="inherit"/>
-                </Backdrop>
+            <Backdrop
+                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={loader}
+            >
+                <CircularProgress color="inherit"/>
+            </Backdrop>
 
-                <ContentBlock maxWidth="xl">
-                    {error ? error : <div>
-                        {loading ? <>loading...</> : <div className="content">
-                            <View
-                                page={page}
-                                pages={pages}
-                                genres={genres}
-                                handlePagination={handlePagination}
-                                films={films}
-                            />
-                        </div>
-                        }
-                    </div>
-                    }
-                </ContentBlock>
+            <ContentTop>
+                {loading ? <>loading...</> :
+                    <ContentBlock maxWidth="xl">
+                        <View
+                            title="top"
+                            page={page}
+                            pages={pages}
+                            genres={genres}
+                            handlePagination={handlePagination}
+                            films={films}
+                        />
+                    </ContentBlock>
+                }
 
-            </Suspense>
-        </div>
+            </ContentTop>
+
+
+        </Suspense>
     );
 };
 

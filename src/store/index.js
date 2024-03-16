@@ -6,9 +6,11 @@ import userSlice from "./slices/userSlice";
 import genreListSlice from "./slices/genreListSlice";
 import filmsSearchSlice from "./slices/filmsSearchSlice";
 import filmsFavoriteSlice from "./slices/filmsFavoriteSlice";
+import videoListSlice from "./slices/videoListSlice";
 
 const rootReducer = combineReducers({
     sliceSearchFilms: filmsSearchSlice,
+    sliceVideoList: videoListSlice,
     sliceFavoriteFilms: filmsFavoriteSlice,
     sliceFilms: filmSlice,
     sliceGenreList: genreListSlice,

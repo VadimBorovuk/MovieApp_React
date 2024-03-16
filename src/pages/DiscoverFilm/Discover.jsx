@@ -2,20 +2,16 @@ import React, {Suspense, useCallback, useEffect, useMemo, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {fetchDiscoverFilms} from "../../store/slices/filmsListSlice";
+
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
-import {Backdrop, CircularProgress, Container} from "@mui/material";
-import View from "../../components/FilmsView/View";
-import SelectGenres from "../../components/UI/SelectGenres";
-import styled from "styled-components";
-import SelectYears from "../../components/UI/SelectYears";
 
-const ContentBlock = styled(Container)`
-    border-radius: 25px;
-    width: 100%;
-    padding: 25px 0;
-    background-color: #354160;
-`
+import {Backdrop, CircularProgress} from "@mui/material";
+import View from "../../components/FilmsView/View";
+import SelectGenres from "../../components/UI/Select/SelectGenres";
+import SelectYears from "../../components/UI/Select/SelectYears";
+import SelectSort from "../../components/UI/Select/SelectSort";
+import {ButtonStyled, ContentBlock, ContentDiscover, FiltersStyled} from "./styled";
 
 const DiscoverPage = () => {
     const [loader, setLoader] = useState(true)
@@ -31,51 +27,75 @@ const DiscoverPage = () => {
 
     const [genreName, setGenreName] = useState([]);
     const [yearLabel, setYearLabel] = useState([]);
+    const [sortLabel, setSortLabel] = useState([]);
 
     const query = useQuery({
         page,
-        with_genres: genreName.toString(),
-        language: localStorage.getItem('lang'),
-        sort_by: 'vote_count.desc',
-        year: '2015,2016'
+        language: localStorage.getItem('lang')
     })
 
     const handleChangeGenre = (event) => {
-        const {target: { value }} = event;
+        const {target: {value}} = event;
         setGenreName(
             typeof value === 'string' ? value.split(',') : value,
         );
         getDiscoverFilms({
             ...query,
-            with_genres: value.toString(),
-            year: yearLabel.toString(),
+            page: 1,
+            with_genres: value.join(','),
+            primary_release_year: yearLabel,
+            sort_by: sortLabel,
         })
+        handlePage(1)
     };
 
     const handleChangeYear = (event) => {
-        const {target: { value }} = event;
-        setYearLabel(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const {target: {value}} = event;
+        setYearLabel(value);
         getDiscoverFilms({
             ...query,
-            year: value.toString(),
-            with_genres: genreName.toString()
+            page: 1,
+            primary_release_year: value,
+            with_genres: genreName.join(','),
+            sort_by: sortLabel
         })
+        handlePage(1)
+    };
+
+    const handleChangeSort = (event) => {
+        const {target: {value}} = event;
+        setSortLabel(value);
+        getDiscoverFilms({
+            ...query,
+            page: 1,
+            sort_by: value,
+            primary_release_year: yearLabel,
+            with_genres: genreName.join(',')
+        })
+        handlePage(1)
     };
 
     const clearFilters = () => {
-        setYearLabel([])
+        handlePage(1)
         setGenreName([])
+        setYearLabel(null)
+        setSortLabel(null)
 
         getDiscoverFilms(query)
     }
 
     const handlePagination = (page) => {
         handlePage(page)
+        getDiscoverFilms({
+            ...query,
+            page,
+            with_genres: genreName.join(','),
+            primary_release_year: yearLabel,
+            sort_by: sortLabel
+        })
     }
 
-    const getDiscoverFilms = useCallback((params)=>{
+    const getDiscoverFilms = useCallback((params) => {
         if (params) {
             dispatch(fetchDiscoverFilms(params))
             setTimeout(() => {
@@ -86,25 +106,23 @@ const DiscoverPage = () => {
     }, [])
 
     useEffect(() => {
-
         getDiscoverFilms(query)
-
     }, [query])
 
 
     return (
-        <div>
-            <Suspense fallback={<>...</>}>
-                <Backdrop
-                    sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                    open={loader}
-                >
-                    <CircularProgress color="inherit"/>
-                </Backdrop>
+        <Suspense fallback={<>...</>}>
+            <Backdrop
+                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={loader}
+            >
+                <CircularProgress color="inherit"/>
+            </Backdrop>
 
-                <div>
-                    {loading ? <>loading...</> :
-                        <ContentBlock maxWidth="xl">
+            <ContentDiscover>
+                {loading ? <>loading...</> :
+                    <ContentBlock maxWidth="xl">
+                        <FiltersStyled>
                             <SelectGenres
                                 genres={genres}
                                 genreName={genreName}
@@ -114,24 +132,29 @@ const DiscoverPage = () => {
                                 yearLabel={yearLabel}
                                 handleChange={handleChangeYear}
                             />
-                            <button style={{
-                                backgroundColor: 'blue',
-                                padding: '10px 20px'
-                            }} onClick={()=> clearFilters()}>clear</button>
-                            <View
-                                page={page}
-                                pages={pages}
-                                genres={genres}
-                                handlePagination={handlePagination}
-                                films={films}
+                            <SelectSort
+                                sortLabel={sortLabel}
+                                handleChange={handleChangeSort}
                             />
-                        </ContentBlock>
+                            <ButtonStyled variant="contained"
+                                          onClick={() => clearFilters()}>
+                                clear
+                            </ButtonStyled>
+                        </FiltersStyled>
 
-                    }
-                </div>
+                        <View
+                            title="discover"
+                            page={page}
+                            pages={pages}
+                            genres={genres}
+                            handlePagination={handlePagination}
+                            films={films}
+                        />
+                    </ContentBlock>
+                }
+            </ContentDiscover>
 
-            </Suspense>
-        </div>
+        </Suspense>
     );
 };
 

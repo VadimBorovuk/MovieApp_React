@@ -28,7 +28,7 @@
 }
 
 .single-img:hover .img-overlay {
-  height: 50%;
+  height: 55%;
 }
 
 .single-img:hover .image {
@@ -36,7 +36,7 @@
 }
 
 .text {
-  margin-bottom: 0;
+  margin: 7px 0;
   text-align: center;
   color: #fff;
   font-size: 20px;
@@ -51,6 +51,12 @@
   font-weight: 300;
 }
 
+.year {
+  margin: 0 0 3px;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+}
 
 .line:last-child {
   display: none;
