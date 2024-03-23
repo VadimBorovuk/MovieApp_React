@@ -43,11 +43,13 @@ const CardMovie = memo(({addToFavorite, film, genres}) => {
             film.id,
             location.pathname !== '/favorite' ? 'change' : 'remove'
         );
+
+
         setTimeout(() => {
             setDisableIcon(false)
-        }, location.pathname !== '/favorite' ? 500 : 2000)
-    }
+        }, location.pathname !== '/favorite' ? 500 : 1000)
 
+    }
 
     const generateData = useMemo(() => {
         return moment(film.release_date).format('DD.MM.YYYY')

@@ -4,7 +4,6 @@ import {Outlet} from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 
 const ContentView = () => {
-
     return (
         <div>
             <Container maxWidth="xl" style={{padding: 20}}>

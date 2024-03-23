@@ -5,10 +5,9 @@ import useQuery from "../../hooks/fetchHooks/useQuery";
 import {Backdrop, CircularProgress} from "@mui/material";
 import View from "../../components/FilmsView/View";
 import {fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
-import {ContentBlock, ContentFavorite} from "./style";
+import {ContentBlock, ContentFavorite, MainFavorite} from "./style";
 
 const FavoritePage = () => {
-    const [loader, setLoader] = useState(true)
     const {genres} = useSelector(state => state.sliceGenreList)
     const {films, loading} = useSelector(state => state.sliceFavoriteFilms)
     const dispatch = useDispatch()
@@ -34,10 +33,6 @@ const FavoritePage = () => {
     const getFavoriteFilms = useCallback((params) => {
         if (params) {
             dispatch(fetchFavoriteFilms(params))
-            setTimeout(() => {
-                setLoader(false)
-            }, 500)
-            setLoader(true)
         }
     }, [])
 
@@ -45,16 +40,16 @@ const FavoritePage = () => {
         getFavoriteFilms(query)
     }, [query])
 
-    return (<Suspense fallback={<>...</>}>
-            <Backdrop
-                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                open={loader}
-            >
-                <CircularProgress color="inherit"/>
-            </Backdrop>
+    return (
+        <MainFavorite>
 
             <ContentFavorite>
-                {loading ? <>loading...</> :
+                {loading ?  <Backdrop
+                        sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                        open={true}
+                    >
+                        <CircularProgress color="inherit"/>
+                    </Backdrop> :
                     <ContentBlock maxWidth="xl">
                         <View
                             page={page}
@@ -67,7 +62,7 @@ const FavoritePage = () => {
                 }
             </ContentFavorite>
 
-        </Suspense>
+        </MainFavorite>
     );
 };
 

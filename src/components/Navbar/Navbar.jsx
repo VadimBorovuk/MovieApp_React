@@ -21,6 +21,8 @@ import {Container, createTheme, ThemeProvider} from "@mui/material";
 import styled from "styled-components";
 import DrawerUI from '../UI/DrawerUi'
 import {fetchGenres} from "../../store/slices/genreListSlice";
+import {LinkItem} from "./styled";
+import {pages, settings} from "../../assets/data/Navbar";
 
 
 const theme = createTheme({
@@ -32,43 +34,6 @@ const theme = createTheme({
     },
 });
 
-const LinkItem = styled(NavLink)`
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-    text-decoration: none;
-    font-size: 16px;
-    color: #fff;
-
-    &.active {
-        background: white;
-        border-radius: 15px;
-        padding: 5px 7px;
-        color: #000000;
-    }
-`;
-
-
-const pages = [
-    {
-        name: 'top',
-        path: 'top'
-    },
-    {
-        name: 'favorite',
-        path: 'favorite'
-    }
-];
-const settings = [
-    {
-        name: 'profile',
-        path: '/'
-    },
-    {
-        name: 'logout',
-        path: 'logout'
-    },
-];
 
 const Navbar = () => {
     const {t, i18n} = useTranslation();

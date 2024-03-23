@@ -4,6 +4,8 @@ import axios from "axios";
 const initialState = {
     loading: false,
     error: '',
+    page: 1,
+    countItems: null,
     searchingFilms: {
         total_results: null,
         results: []
@@ -24,11 +26,16 @@ const filmsSearchSlice = createSlice({
         clearFilms(state) {
             state.loading = false;
             state.error = null;
+            state.page = 1
+            state.countItems = 20
             state.searchingFilms = {
                 total_results: null,
                 results: []
             }
-        }
+        },
+        setPage(state, action) {
+            state.page = action.payload;
+        },
     },
 
     extraReducers: (builder) => {
@@ -38,20 +45,24 @@ const filmsSearchSlice = createSlice({
         builder.addCase(searchFilms.fulfilled, (state, action) => {
             state.loading = false
             const {results, total_results} = action.payload
-            state.searchingFilms = {total_results, results}
+            state.countItems = action.payload.results.length
+            state.searchingFilms.total_results = total_results
+            state.searchingFilms.total_results = total_results
+            state.searchingFilms.results = state.searchingFilms.results.concat(results)
         })
         builder.addCase(searchFilms.rejected, (state, action) => {
             state.loading = false
             state.searchingFilms = {
                 total_results: null,
-                results: []
+                results: [],
+                items: []
             }
             state.error = action.error.message
         })
 
     }
 })
-export const {clearFilms} = filmsSearchSlice.actions
+export const {clearFilms, setPage} = filmsSearchSlice.actions
 
 
 export default filmsSearchSlice.reducer

@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {RouterProvider} from "react-router-dom";
 import './App.scss'
 
@@ -6,11 +6,7 @@ import {router} from "./router/routerPath";
 
 const App = () => {
     return (
-        <div>
-            <Suspense fallback={<></>}>
-                <RouterProvider router={router}/>
-            </Suspense>
-        </div>
+        <RouterProvider router={router}/>
     );
 };
 

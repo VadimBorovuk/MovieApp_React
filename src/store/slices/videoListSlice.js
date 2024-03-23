@@ -15,7 +15,7 @@ export const fetchVideos = createAsyncThunk('fetchVideos', ({id, language}) => {
         .then((response) => response.data)
 })
 
-const videosGenreListSlice = createSlice({
+const videosListSlice = createSlice({
     name: 'videos',
     initialState,
     extraReducers: (builder) => {
@@ -37,4 +37,4 @@ const videosGenreListSlice = createSlice({
 })
 
 
-export default videosGenreListSlice.reducer
+export default videosListSlice.reducer

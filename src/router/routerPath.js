@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router-dom";
 
-import {lazy} from "react";
+import {lazy, Suspense} from "react";
 
 const RootLayoutLazy = lazy(() => import("../layouts/RootLayout"))
 const PageNotFoundLazy = lazy(() => import("../pages/404/index"))
@@ -15,7 +15,7 @@ const SignUpLazy = lazy(() => import("../pages/SignUp"))
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <RootLayoutLazy/>,
+        element: <Suspense fallback={<></>}><RootLayoutLazy/></Suspense>,
         errorElement: <PageNotFoundLazy/>,
         children: [
             {

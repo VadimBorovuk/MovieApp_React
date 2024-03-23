@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, Grid, Snackbar} from "@mui/material";
 import Pagination from "../Pagination";
 import {useDispatch} from "react-redux";
-import {AddFavoriteFilms, fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
+import {AddFavoriteFilms, fetchFavoriteFilms, removeFromList} from "../../store/slices/filmsFavoriteSlice";
 import CardMovie from "./CardMovie";
 import {useLocation} from "react-router-dom";
 
@@ -13,6 +13,7 @@ const View = ({films, page, pages, handlePagination, genres}) => {
     const dispatch = useDispatch()
 
     const addToFavorite = (data, id, status) => {
+
         dispatch(AddFavoriteFilms({
             "media_type": "movie",
             "media_id": id,
@@ -21,14 +22,14 @@ const View = ({films, page, pages, handlePagination, genres}) => {
         setMessage(true)
         setTimeout(() => {
             dispatch(fetchFavoriteFilms({page: 1, language: localStorage.getItem('lang')}))
-        }, 1500)
+        }, 800)
     }
 
     return (
         <div>
             <Snackbar
                 open={message}
-                autoHideDuration={location.pathname !== '/favorite' ? 1000 : 2000}
+                autoHideDuration={800}
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                 onClose={() => setMessage(false)}>
                 <Alert

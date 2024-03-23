@@ -7,10 +7,12 @@ import genreListSlice from "./slices/genreListSlice";
 import filmsSearchSlice from "./slices/filmsSearchSlice";
 import filmsFavoriteSlice from "./slices/filmsFavoriteSlice";
 import videoListSlice from "./slices/videoListSlice";
+import actorsListSlice from "./slices/actorsListSlice";
 
 const rootReducer = combineReducers({
     sliceSearchFilms: filmsSearchSlice,
     sliceVideoList: videoListSlice,
+    sliceActorsList: actorsListSlice,
     sliceFavoriteFilms: filmsFavoriteSlice,
     sliceFilms: filmSlice,
     sliceGenreList: genreListSlice,

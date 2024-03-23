@@ -5,11 +5,9 @@ import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
 import {Backdrop, CircularProgress, Container} from "@mui/material";
 import View from "../../components/FilmsView/View";
-import {ContentBlock, ContentTop} from "./style";
+import {ContentBlock, ContentTop, MainTop} from "./style";
 
 const TopFilmsPage = () => {
-
-    const [loader, setLoader] = useState(true)
     const {genres} = useSelector(state => state.sliceGenreList)
 
     const {films, loading, error} = useSelector(state => state.sliceFilms)
@@ -37,10 +35,6 @@ const TopFilmsPage = () => {
     const getTopFilms = useCallback((params) => {
         if (params) {
             dispatch(fetchTopFilms(params))
-            setTimeout(() => {
-                setLoader(false)
-            }, 500)
-            setLoader(true)
         }
     }, [])
 
@@ -50,17 +44,14 @@ const TopFilmsPage = () => {
     }, [query])
 
     return (
-        <Suspense fallback={<>...</>}>
-
-            <Backdrop
-                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                open={loader}
-            >
-                <CircularProgress color="inherit"/>
-            </Backdrop>
-
+        <MainTop>
             <ContentTop>
-                {loading ? <>loading...</> :
+                {loading ? <Backdrop
+                        sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                        open={true}
+                    >
+                        <CircularProgress color="inherit"/>
+                    </Backdrop> :
                     <ContentBlock maxWidth="xl">
                         <View
                             title="top"
@@ -75,8 +66,7 @@ const TopFilmsPage = () => {
 
             </ContentTop>
 
-
-        </Suspense>
+        </MainTop>
     );
 };
 

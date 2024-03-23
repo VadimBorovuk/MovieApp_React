@@ -11,6 +11,16 @@ export const ContentBlock = styled(Container)`
 
 export const ContentDiscover = styled.div`
     width: 100%;
+    //min-height: 500px;
+    background-color: #354160;
+    border-radius: 25px;
+`
+
+export const MainDiscover = styled.div`
+    width: 100%;
+    //min-height: 500px;
+    background-color: #354160;
+    border-radius: 25px;
 `
 
 export const FiltersStyled = styled.div`

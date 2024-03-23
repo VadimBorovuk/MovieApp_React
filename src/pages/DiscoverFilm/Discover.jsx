@@ -1,4 +1,4 @@
-import React, {Suspense, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 import {fetchDiscoverFilms} from "../../store/slices/filmsListSlice";
@@ -11,10 +11,9 @@ import View from "../../components/FilmsView/View";
 import SelectGenres from "../../components/UI/Select/SelectGenres";
 import SelectYears from "../../components/UI/Select/SelectYears";
 import SelectSort from "../../components/UI/Select/SelectSort";
-import {ButtonStyled, ContentBlock, ContentDiscover, FiltersStyled} from "./styled";
+import {ButtonStyled, ContentBlock, ContentDiscover, FiltersStyled, MainDiscover} from "./styled";
 
 const DiscoverPage = () => {
-    const [loader, setLoader] = useState(true)
     const {genres} = useSelector(state => state.sliceGenreList)
     const {films, loading} = useSelector(state => state.sliceFilms)
     const dispatch = useDispatch()
@@ -98,10 +97,6 @@ const DiscoverPage = () => {
     const getDiscoverFilms = useCallback((params) => {
         if (params) {
             dispatch(fetchDiscoverFilms(params))
-            setTimeout(() => {
-                setLoader(false)
-            }, 500)
-            setLoader(true)
         }
     }, [])
 
@@ -111,16 +106,14 @@ const DiscoverPage = () => {
 
 
     return (
-        <Suspense fallback={<>...</>}>
-            <Backdrop
-                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                open={loader}
-            >
-                <CircularProgress color="inherit"/>
-            </Backdrop>
-
+        <MainDiscover>
             <ContentDiscover>
-                {loading ? <>loading...</> :
+                {loading ? <Backdrop
+                        sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                        open={true}
+                    >
+                        <CircularProgress color="inherit"/>
+                    </Backdrop> :
                     <ContentBlock maxWidth="xl">
                         <FiltersStyled>
                             <SelectGenres
@@ -154,7 +147,7 @@ const DiscoverPage = () => {
                 }
             </ContentDiscover>
 
-        </Suspense>
+        </MainDiscover>
     );
 };
 

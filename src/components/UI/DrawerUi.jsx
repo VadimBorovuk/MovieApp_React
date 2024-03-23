@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -7,17 +6,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect, useState} from "react";
 import useDebounce from "../../hooks/fetchHooks/useDebounce";
 import {useDispatch, useSelector} from "react-redux";
-import {clearFilms, searchFilms} from "../../store/slices/filmsSearchSlice";
-import SearchFilm from "./SearchFilm";
+import {clearFilms, searchFilms, setPage} from "../../store/slices/filmsSearchSlice";
+import {Backdrop, CircularProgress} from "@mui/material";
+import {SearchBox, SearchContent, SearchCountResults, SearchData, SearchInput} from "./styled";
+import SearchView from "./Search/SearchView";
+
 
 export default function TemporaryDrawer() {
-    const {loading, error, searchingFilms} = useSelector(state => state.sliceSearchFilms)
-
-    const [open, setOpen] = React.useState(false);
+    const {loading, countItems, searchingFilms, page} = useSelector(state => state.sliceSearchFilms)
+    const [open, setOpen] = React.useState(true);
     const [searchFilm, setSearchFilm] = useState('')
     const dispatch = useDispatch()
-
     const debouncedSearchTerm = useDebounce(searchFilm, 500);
+
+    // const [page, setPage] = useState(1);
+    // const [countItems, setCountItems] = useState(0);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -25,14 +28,20 @@ export default function TemporaryDrawer() {
 
     useEffect(() => {
         if (debouncedSearchTerm) {
+            dispatch(clearFilms())
             dispatch(searchFilms({
+                page: page,
                 query: debouncedSearchTerm
             }))
+
         } else {
             dispatch(clearFilms())
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, page]);
 
+    const loadMore = () => {
+        dispatch(setPage(page + 1));
+    };
 
     return (
         <div>
@@ -40,20 +49,48 @@ export default function TemporaryDrawer() {
                 <MenuIcon/>
             </Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
-                <Box sx={{width: 500}} role="presentation">
-                    <input type="text" value={searchFilm} onChange={e => setSearchFilm(e.target.value)}/>
-
+                <SearchBox role="presentation">
+                    <SearchInput
+                        sx={{
+                            '.css-o943dk-MuiFormLabel-root-MuiInputLabel-root': {
+                                color: '#fff'
+                            },
+                            '.css-10botns-MuiInputBase-input-MuiFilledInput-input': {
+                                color: '#fff'
+                            },
+                            '.css-e4w4as-MuiFormLabel-root-MuiInputLabel-root': {
+                                color: '#fff'
+                            },
+                            '.css-10botns-MuiInputBase-input-MuiFilledInput-input:focus': {
+                                color: '#fff'
+                            }
+                        }}
+                        label="Search movie"
+                        value={searchFilm}
+                        onChange={e => setSearchFilm(e.target.value)}
+                        variant="filled"/>
                     <Divider/>
 
-                    {loading ? 'Loading' : searchingFilms.results.map(film => {
-                        return (
-                            <SearchFilm
-                                film={film}
-                                toggleDrawer={toggleDrawer(false)}
-                                key={film.id}/>
-                        )
-                    })}
-                </Box>
+                    <SearchContent>
+                        {loading ? <Backdrop
+                                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                                open={true}
+                            >
+                                <CircularProgress color="inherit"/>
+                            </Backdrop> :
+                            <SearchData>
+                                <SearchCountResults>
+                                    All results: {searchingFilms.total_results}
+                                </SearchCountResults>
+                                <SearchView
+                                    results={searchingFilms.results}
+                                    toggleDrawer={toggleDrawer}
+                                />
+                                {countItems === 20 && <button onClick={loadMore}>Load More</button>}
+                            </SearchData>
+                        }
+                    </SearchContent>
+                </SearchBox>
             </Drawer>
         </div>
     );

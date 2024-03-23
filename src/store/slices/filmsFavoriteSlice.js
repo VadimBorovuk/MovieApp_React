@@ -5,7 +5,7 @@ const initialState = {
     loading: false,
     error: '',
     films: {
-        page: null,
+        page: 1,
         total_pages: null,
         total_results: null,
         results: []
@@ -60,8 +60,18 @@ const filmsFavoriteSlice = createSlice({
             }
             state.error = action.error.message
         })
+    },
+    reducers: {
+        removeFromList(state, arr) {
+
+            // state.films.results = arr
+
+            // let res = state.films.results.filter(film => film.id !== id)
+            // console.log(res)
+        }
     }
 })
+export const {removeFromList} = filmsFavoriteSlice.actions
 
 
 export default filmsFavoriteSlice.reducer

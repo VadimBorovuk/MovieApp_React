@@ -1,28 +1,47 @@
 import React from 'react';
-import styled from "styled-components";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {CardFilm, PreviewImage} from "./styled";
+import {GenresSearchStyled, GenreStyled} from "../FilmsView/styled";
+import {useSelector} from "react-redux";
 
-const CardFilm = styled.div`
-    min-height: 120px;
-    background: orange;
-    padding: 10px;
-    margin: 10px 20px;
-    border-radius: 15px;
-`
 
 const SearchFilm = ({film, toggleDrawer}) => {
+    const {genres} = useSelector(state => state.sliceGenreList)
+
     const navigate = useNavigate()
+
+    const getGenre = ({genre_ids}) => {
+
+        const genreMap = genres.reduce((acc, genre) => {
+            acc[genre.id] = genre.name;
+            return acc;
+        }, {});
+
+        return genre_ids.map(id => genreMap[id]);
+
+    }
 
     const openFilmPath = () => {
         toggleDrawer()
-        setTimeout(()=>{
+        setTimeout(() => {
             navigate(`film/${film.id}`)
-        },0)
+        }, 0)
     }
 
     return (
         <CardFilm onClick={openFilmPath}>
-            {film.title}
+            <PreviewImage background={`${process.env.REACT_APP_API_PATH_IMAGE}/${film.backdrop_path}`}/>
+            <div className="search-info">
+                <div className="search-poster">
+                    <img src={`${process.env.REACT_APP_API_PATH_IMAGE}/${film.poster_path}`} alt=""/>
+                </div>
+                <div className="search-description">
+                    <h3 className="description-title">{film.title}</h3>
+                    <GenresSearchStyled>
+                        {getGenre(film).map((item, idx) => (<GenreStyled key={idx}>{item}</GenreStyled>))}
+                    </GenresSearchStyled>
+                </div>
+            </div>
         </CardFilm>
     );
 };
