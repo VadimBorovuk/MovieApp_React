@@ -1,16 +1,26 @@
-import { useRouteError } from "react-router-dom";
+import {useNavigate, useRouteError} from "react-router-dom";
+import {NotFoundStyled, NotViewStyled} from "./styled";
+import Button from "@mui/material/Button";
 
 export default function ErrorPage() {
+    const navigate = useNavigate()
     const error = useRouteError();
-    console.error(error);
+    const goBackBtn = () => {
+        navigate('/')
+    }
 
     return (
-        <div id="error-page">
-            <h1>Oops!</h1>
-            <p>Sorry, an unexpected error has occurred.</p>
-            <p>
-                <i>{error.statusText || error.message}</i>
-            </p>
-        </div>
+        <NotFoundStyled>
+            <NotViewStyled>
+                <h1>Oops!</h1>
+                <p>Sorry, an unexpected error has occurred.</p>
+                <p>
+                    <i>{error.statusText || error.message}</i>
+                </p>
+                <Button variant="outlined" onClick={() => goBackBtn()}>
+                    Go back
+                </Button>
+            </NotViewStyled>
+        </NotFoundStyled>
     );
 }

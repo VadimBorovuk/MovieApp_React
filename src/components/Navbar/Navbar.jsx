@@ -1,29 +1,19 @@
 import React, {useEffect} from 'react';
-import {NavLink, useNavigate} from "react-router-dom";
-import {useTranslation} from "react-i18next";
-import {removeUser} from "../../store/slices/userSlice";
-import {useDispatch} from "react-redux";
 
 import MovieIcon from '@mui/icons-material/Movie';
-import StarsIcon from '@mui/icons-material/Stars';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import {Container, createTheme, ThemeProvider} from "@mui/material";
-import styled from "styled-components";
 import DrawerUI from '../UI/DrawerUi'
+import LanguageDown from '../Navbar/Langs'
+import ProfileDown from '../Navbar/Profile'
+import Pages from '../Navbar/Pages'
 import {fetchGenres} from "../../store/slices/genreListSlice";
 import {LinkItem} from "./styled";
-import {pages, settings} from "../../assets/data/Navbar";
-
+import {useTranslation} from "react-i18next";
+import {useDispatch} from "react-redux";
 
 const theme = createTheme({
     palette: {
@@ -36,38 +26,9 @@ const theme = createTheme({
 
 
 const Navbar = () => {
-    const {t, i18n} = useTranslation();
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-
-    const changeLang = (lang) => {
-        localStorage.setItem('lang', lang)
-        i18n.changeLanguage(lang)
-        window.location.reload()
-    }
-
-    const goPathNavigate = (item) => {
-        if (item === 'logout') {
-
-            dispatch(removeUser())
-
-        } else {
-            navigate('/')
-        }
-        handleCloseUserMenu()
-    }
-
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const {t, i18n} = useTranslation();
 
     useEffect(() => {
         dispatch(fetchGenres({
@@ -87,52 +48,11 @@ const Navbar = () => {
                         {t('t.pages.main')}
                     </LinkItem>
 
+                    <Pages/>
 
-                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (<LinkItem to={page.path} key={page.path}>
-                                {
-                                    page.name === 'top' ?
-                                        <StarsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-                                        :  <FavoriteIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-                                }
-
-                                {t(`t.pages.${page.name}`)}
-                            </LinkItem>
-                        ))}
-                    </Box>
-
-                    <Box sx={{flexGrow: 0}}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <AccountCircleIcon/>
-                            </IconButton>
-                        </Tooltip>
-                        <div>
-                            <button onClick={() => changeLang('en')}>en</button>
-                            <button onClick={() => changeLang('uk')}>uk</button>
-                        </div>
-                        <Menu
-                            sx={{mt: '45px'}}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((item) => (
-                                <MenuItem key={item.path} onClick={() => goPathNavigate(item.path)}>
-                                    <Typography textAlign="center"> {t(`t.settings.${item.name}`)}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
+                    <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>
+                        <LanguageDown/>
+                        <ProfileDown/>
                     </Box>
                 </Toolbar>
             </Container>

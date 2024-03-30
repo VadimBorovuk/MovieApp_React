@@ -25,7 +25,7 @@ const ActorCard = ({original_name, profile_path, character}) => {
                 <CardMedia
                     sx={{height: 200}}
                     image={profile_path}
-                    title="green iguana"
+                    title={original_name}
                 />
                 <CardStyled>
                     <Typography gutterBottom textAlign="center" variant="p" component="div">

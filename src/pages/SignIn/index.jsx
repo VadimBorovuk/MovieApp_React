@@ -1,14 +1,21 @@
 import React from 'react';
 import Login from "../../components/Auth/Login";
-import {Link} from "react-router-dom";
+import {LoginPageStyled, LoginTitleStyled,LinkAuthStyled, LoginViewStyled} from "./styled";
+
 
 const SignInPage = () => {
     return (
-        <div>
-            login page
-            <Login/>
-            <Link to="/register">sign up</Link>
-        </div>
+        <LoginPageStyled>
+            <LoginViewStyled>
+                <LoginTitleStyled>
+                    login page
+                </LoginTitleStyled>
+                <Login/>
+                <LinkAuthStyled to="/register">
+                    sign up
+                </LinkAuthStyled>
+            </LoginViewStyled>
+        </LoginPageStyled>
     );
 };
 

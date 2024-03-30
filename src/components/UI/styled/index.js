@@ -19,20 +19,46 @@ export const CardFilm = styled.div`
         z-index: 1;
         color: #fff;
 
-        div:first-child {
+        .search-poster {
             flex: 1 1 26%;
             max-width: 26%;
         }
 
-        div:nth-child(2) {
-            flex: 1 1 68%;
-            max-width: 68%;
-        }
 
         .search-description {
-            
-            .description-title{
+            flex: 1 1 72%;
+            max-width: 72%;
+
+            padding: 15px 20px;
+
+            .description-title {
                 font-size: 22px;
+                color: gold;
+            }
+
+            .desc-contact {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+
+                .desc-info {
+                    flex: 1 1 25%;
+                    max-width: 25%;
+                    display: flex;
+                    flex-direction: column;
+
+                    &__value {
+                        font-size: 22px;
+                        letter-spacing: 2px;
+                        color: gold;
+                    }
+
+                    &__label {
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                }
             }
         }
 
@@ -76,7 +102,29 @@ export const SearchContent = styled.div`
 
 export const SearchData = styled.div``
 export const SearchCountResults = styled.div`
+    text-transform: uppercase;
     text-align: center;
     color: #fff;
     margin-top: 10px;
+`
+
+export const SearchNotData = styled.div`
+    width: 100%;
+    min-height: calc(100vh - 56px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        border-radius: 20px;
+        width: 450px;
+        height: 450px;
+        object-fit: cover;
+    }
+`
+
+export const LoadMoreBtn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 40px;
 `

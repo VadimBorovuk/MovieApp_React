@@ -40,6 +40,17 @@ const SearchFilm = ({film, toggleDrawer}) => {
                     <GenresSearchStyled>
                         {getGenre(film).map((item, idx) => (<GenreStyled key={idx}>{item}</GenreStyled>))}
                     </GenresSearchStyled>
+                    <div className="desc-contact">
+                        <div className="desc-info">
+                            <span className="desc-info__value">{film.vote_average}</span>
+                            <span className="desc-info__label">Popularity</span>
+                        </div>
+                        <div className="desc-info">
+                            <span className="desc-info__value">{film.vote_count}</span>
+                            <span className="desc-info__label">Vote count</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </CardFilm>

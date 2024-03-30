@@ -33,15 +33,17 @@ export const router = createBrowserRouter([
             {
                 path: "film/:id",
                 element: <FilmPageLazy/>,
-            },
+            }
         ]
     },
     {
         path: "login",
-        element: <SignInLazy/>
+        errorElement: <PageNotFoundLazy/>,
+        element: <Suspense fallback={<></>}><SignInLazy/></Suspense>
     },
     {
         path: "register",
-        element: <SignUpLazy/>
+        errorElement: <PageNotFoundLazy/>,
+        element: <Suspense fallback={<></>}><SignUpLazy/></Suspense>
     }
 ]);

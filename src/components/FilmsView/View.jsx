@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, Grid, Snackbar} from "@mui/material";
 import Pagination from "../Pagination";
 import {useDispatch} from "react-redux";
-import {AddFavoriteFilms, fetchFavoriteFilms, removeFromList} from "../../store/slices/filmsFavoriteSlice";
+import {AddFavoriteFilms, fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
 import CardMovie from "./CardMovie";
 import {useLocation} from "react-router-dom";
 

@@ -59,8 +59,8 @@ export const GenresSearchStyled = styled.div`
 export const GenreStyled = styled.span`
     color: #fff;
     font-size: 13px;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
     background-color: rgba(255, 255, 255, .5);
     border-radius: 20px;
     padding: 4px 8px;

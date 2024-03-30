@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import {Accordion} from "@mui/material";
 
 export const MovieView = styled.div`
     padding: 10px 30px 50px;

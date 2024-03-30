@@ -2,42 +2,48 @@ import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
+import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import {useEffect, useState} from "react";
 import useDebounce from "../../hooks/fetchHooks/useDebounce";
 import {useDispatch, useSelector} from "react-redux";
 import {clearFilms, searchFilms, setPage} from "../../store/slices/filmsSearchSlice";
 import {Backdrop, CircularProgress} from "@mui/material";
-import {SearchBox, SearchContent, SearchCountResults, SearchData, SearchInput} from "./styled";
+import {SearchBox, SearchContent, SearchData, SearchInput} from "./styled";
 import SearchView from "./Search/SearchView";
 
 
-export default function TemporaryDrawer() {
+const SearchDrawer = () => {
     const {loading, countItems, searchingFilms, page} = useSelector(state => state.sliceSearchFilms)
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const [searchFilm, setSearchFilm] = useState('')
     const dispatch = useDispatch()
     const debouncedSearchTerm = useDebounce(searchFilm, 500);
-
-    // const [page, setPage] = useState(1);
-    // const [countItems, setCountItems] = useState(0);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
 
     useEffect(() => {
+        // dispatch(clearFilms())
         if (debouncedSearchTerm) {
-            dispatch(clearFilms())
             dispatch(searchFilms({
                 page: page,
-                query: debouncedSearchTerm
+                query: debouncedSearchTerm,
+                language: localStorage.getItem('lang')
             }))
 
         } else {
             dispatch(clearFilms())
         }
-    }, [debouncedSearchTerm, page]);
+        // return () => {
+        //     dispatch(clearFilms())
+        // };
+    }, [debouncedSearchTerm, page, dispatch]);
+
+
+    useEffect(() => {
+        dispatch(clearFilms())
+    }, [searchFilm])
 
     const loadMore = () => {
         dispatch(setPage(page + 1));
@@ -46,7 +52,7 @@ export default function TemporaryDrawer() {
     return (
         <div>
             <Button onClick={toggleDrawer(true)}>
-                <MenuIcon/>
+                <ScreenSearchDesktopIcon sx={{color: '#fff'}}/>
             </Button>
             <Drawer open={open} onClose={toggleDrawer(false)}>
                 <SearchBox role="presentation">
@@ -78,16 +84,12 @@ export default function TemporaryDrawer() {
                             >
                                 <CircularProgress color="inherit"/>
                             </Backdrop> :
-                            <SearchData>
-                                <SearchCountResults>
-                                    All results: {searchingFilms.total_results}
-                                </SearchCountResults>
-                                <SearchView
-                                    results={searchingFilms.results}
-                                    toggleDrawer={toggleDrawer}
-                                />
-                                {countItems === 20 && <button onClick={loadMore}>Load More</button>}
-                            </SearchData>
+                            <SearchView
+                                countItems={countItems}
+                                searching={searchingFilms}
+                                toggleDrawer={toggleDrawer}
+                                loadMore={loadMore}
+                            />
                         }
                     </SearchContent>
                 </SearchBox>
@@ -95,3 +97,5 @@ export default function TemporaryDrawer() {
         </div>
     );
 }
+
+export default SearchDrawer

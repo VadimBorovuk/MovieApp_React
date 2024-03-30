@@ -27,7 +27,7 @@ const filmsSearchSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.page = 1
-            state.countItems = 20
+            state.countItems = null
             state.searchingFilms = {
                 total_results: null,
                 results: []
@@ -45,10 +45,13 @@ const filmsSearchSlice = createSlice({
         builder.addCase(searchFilms.fulfilled, (state, action) => {
             state.loading = false
             const {results, total_results} = action.payload
+            const array = state.searchingFilms.results.concat(results)
+
             state.countItems = action.payload.results.length
             state.searchingFilms.total_results = total_results
-            state.searchingFilms.total_results = total_results
-            state.searchingFilms.results = state.searchingFilms.results.concat(results)
+
+            state.searchingFilms.results = Array.from(new Set(array.map(item => item.id)))
+                .map(id => array.find(obj => obj.id === id))
         })
         builder.addCase(searchFilms.rejected, (state, action) => {
             state.loading = false

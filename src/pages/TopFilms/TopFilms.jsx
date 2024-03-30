@@ -1,16 +1,16 @@
-import React, {Suspense, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchDiscoverFilms, fetchTopFilms} from "../../store/slices/filmsListSlice";
+import {fetchTopFilms} from "../../store/slices/filmsListSlice";
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
-import {Backdrop, CircularProgress, Container} from "@mui/material";
+import {Backdrop, CircularProgress} from "@mui/material";
 import View from "../../components/FilmsView/View";
 import {ContentBlock, ContentTop, MainTop} from "./style";
 
 const TopFilmsPage = () => {
     const {genres} = useSelector(state => state.sliceGenreList)
 
-    const {films, loading, error} = useSelector(state => state.sliceFilms)
+    const {films, loading} = useSelector(state => state.sliceFilms)
     const dispatch = useDispatch()
 
     // const count = 300 / 20
