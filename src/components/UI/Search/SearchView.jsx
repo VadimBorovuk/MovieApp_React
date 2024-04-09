@@ -4,12 +4,12 @@ import {LoadMoreBtn, SearchCountResults, SearchData, SearchNotData} from "../sty
 import ImageBack from '../../../assets/images/movie-background.jpg'
 import Button from "@mui/material/Button";
 
-const SearchView = ({searching, toggleDrawer, countItems, loadMore}) => {
+const SearchView = ({searching, toggleDrawer, countItems, loadMore, t}) => {
     return (
         <SearchData>
             {
                 countItems ? <SearchCountResults>
-                    All results: {searching.total_results}
+                    {t('t.all.results')} : {searching.total_results}
                 </SearchCountResults> : ''
             }
 
@@ -27,7 +27,9 @@ const SearchView = ({searching, toggleDrawer, countItems, loadMore}) => {
                     </SearchNotData>
             }
             <LoadMoreBtn>
-                {countItems === 20 && <Button variant="contained" onClick={loadMore}>Load More</Button>}
+                {countItems === 20 && <Button variant="contained" onClick={loadMore}>
+                    {t('t.load.more')}
+                </Button>}
             </LoadMoreBtn>
         </SearchData>
     );

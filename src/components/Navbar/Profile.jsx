@@ -57,7 +57,7 @@ const ProfileDown = () => {
 
     return (
         <div>
-            <Tooltip title="Open settings">
+            <Tooltip title={t('t.open.settings')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0, color: '#fff'}}>
                     <Avatar alt="Remy Sharp"
                             src={currentAvatar}/>

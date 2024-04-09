@@ -20,6 +20,7 @@ import PanteraAvatar from '../../assets/images/icons/BlackPantera.png'
 import WolfAvatar from '../../assets/images/icons/Wolfrine.png'
 import SpiderAvatar from '../../assets/images/icons/spiderman.png'
 import WonderWAvatar from '../../assets/images/icons/wonder-woman.png'
+import {useTranslation} from "react-i18next";
 
 const heroAvatars = [
     DeadPoolAvatar,
@@ -36,6 +37,7 @@ const heroAvatars = [
 ]
 
 const DialogInfoUser = ({onClose, open}) => {
+    const {t} = useTranslation();
     const [messageCopy, setMessageCopy] = useState(false)
 
     const userName = localStorage.getItem('user_name')
@@ -65,7 +67,7 @@ const DialogInfoUser = ({onClose, open}) => {
                     variant="filled"
                     sx={{width: '100%'}}
                 >
-                    Success copied
+                    {t('t.copy.success')}
                 </Alert>
             </Snackbar>
 
@@ -75,7 +77,7 @@ const DialogInfoUser = ({onClose, open}) => {
                     maxWidth: "550px!important",
                 },
             }} onClose={handleClose} open={open}>
-                <DialogTitle>Profile information</DialogTitle>
+                <DialogTitle>{t('t.info.profile')}</DialogTitle>
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}

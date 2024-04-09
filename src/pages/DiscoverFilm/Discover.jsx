@@ -12,8 +12,11 @@ import SelectGenres from "../../components/UI/Select/SelectGenres";
 import SelectYears from "../../components/UI/Select/SelectYears";
 import SelectSort from "../../components/UI/Select/SelectSort";
 import {ButtonStyled, ContentBlock, ContentDiscover, FiltersStyled, MainDiscover} from "./styled";
+import {useTranslation} from "react-i18next";
 
 const DiscoverPage = () => {
+    const {t} = useTranslation();
+
     const {genres} = useSelector(state => state.sliceGenreList)
     const {films, loading} = useSelector(state => state.sliceFilms)
     const dispatch = useDispatch()
@@ -117,21 +120,24 @@ const DiscoverPage = () => {
                     <ContentBlock maxWidth="xl">
                         <FiltersStyled>
                             <SelectGenres
+                                t={t}
                                 genres={genres}
                                 genreName={genreName}
                                 handleChange={handleChangeGenre}
                             />
                             <SelectYears
+                                t={t}
                                 yearLabel={yearLabel}
                                 handleChange={handleChangeYear}
                             />
                             <SelectSort
+                                t={t}
                                 sortLabel={sortLabel}
                                 handleChange={handleChangeSort}
                             />
                             <ButtonStyled variant="contained"
                                           onClick={() => clearFilters()}>
-                                clear
+                                {t('t.filters.clear')}
                             </ButtonStyled>
                         </FiltersStyled>
 

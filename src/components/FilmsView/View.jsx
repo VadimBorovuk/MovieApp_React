@@ -5,15 +5,17 @@ import {useDispatch} from "react-redux";
 import {AddFavoriteFilms, fetchFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
 import CardMovie from "./CardMovie";
 import {useLocation} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const View = ({films, page, pages, handlePagination, genres}) => {
+    const [switchTitle, setSwitchTitle] = useState('')
+    const {t} = useTranslation();
     const location = useLocation()
     const [message, setMessage] = useState(false)
 
     const dispatch = useDispatch()
 
     const addToFavorite = (data, id, status) => {
-
         dispatch(AddFavoriteFilms({
             "media_type": "movie",
             "media_id": id,
@@ -34,11 +36,14 @@ const View = ({films, page, pages, handlePagination, genres}) => {
                 onClose={() => setMessage(false)}>
                 <Alert
                     onClose={() => setMessage(false)}
-                    severity={location.pathname !== '/favorite' ? 'success' : 'error'}
+                    severity={location.pathname !== '/favorite' ? !switchTitle ? 'error' : 'success' : 'error'}
                     variant="filled"
                     sx={{width: '100%'}}
                 >
-                    This is a success Alert inside a Snackbar!
+                    {
+                        location.pathname !== '/favorite' ? !switchTitle ?
+                            t(('t.message.remove.favorite')) : t(('t.message.add.favorite')) : t(('t.message.remove.favorite'))
+                    }
                 </Alert>
             </Snackbar>
 
@@ -46,7 +51,9 @@ const View = ({films, page, pages, handlePagination, genres}) => {
                 {films && films.results.map(film => {
                     return <Grid item xs={12} sm={6} md={4} lg={3} key={film.id}>
                         <CardMovie
+                            setSwitchTitle={setSwitchTitle}
                             addToFavorite={addToFavorite}
+                            switchTitle={switchTitle}
                             genres={genres}
                             film={film}
                         />

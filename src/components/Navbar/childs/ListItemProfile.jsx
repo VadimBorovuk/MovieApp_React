@@ -37,7 +37,7 @@ const ListItemProfile = ({type, body, setBodyCopy}) => {
                 primary={
                     type !== 'name' ?
                         body.length > 200 ? body.substring(0, 200) + '...' :
-                            body : `Profile name - ${body}`
+                            body : `${body}`
                 }
             />
             {type !== 'name' ?

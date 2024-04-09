@@ -17,7 +17,7 @@ const Form = ({title, handleClick, loading}) => {
         >
             <FormStyled>
                 <TextField
-                    sx={{mb: 2}}
+                    sx={{mb: 3}}
                     type='name'
                     id="outlined-required"
                     label="Name"
@@ -25,7 +25,7 @@ const Form = ({title, handleClick, loading}) => {
                     onChange={e => setName(e.target.value)}
                 />
                 <TextField
-                    sx={{mb: 2}}
+                    sx={{mb: 3}}
                     type='email'
                     id="outlined-required"
                     label="Email"
@@ -33,7 +33,7 @@ const Form = ({title, handleClick, loading}) => {
                     onChange={e => setEmail(e.target.value)}
                 />
                 <TextField
-                    sx={{mb: 2}}
+                    sx={{mb: 3}}
                     type='password'
                     id="outlined-required"
                     label="Password"

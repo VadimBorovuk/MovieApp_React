@@ -29,6 +29,7 @@ export const FiltersStyled = styled.div`
     background-color: #e3e3e3;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 20px;
     box-shadow: 0 8px 18px #1976d2;
 `

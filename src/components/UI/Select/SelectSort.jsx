@@ -9,33 +9,37 @@ import Select from '@mui/material/Select';
 
 let sorts = [
     {
-        value: 'vote_count.asc',
-        name: 'Asc'
-    }, {
         value: 'vote_count.desc',
-        name: 'Desc'
-    }];
+        name: 't.sort.desc'
+    },
+    {
+        value: 'vote_count.asc',
+        name: 't.sort.asc'
+    }
+];
 
 
-const SelectSort = ({sortLabel, handleChange}) => {
+const SelectSort = ({t, sortLabel, handleChange}) => {
 
     return (
         <div>
             <FormControl sx={{m: 1, width: 300}}>
-                <InputLabel id="demo-multiple-name-label">Select sortable</InputLabel>
+                <InputLabel id="demo-multiple-name-label">
+                    {t('t.filters.sort')}
+                </InputLabel>
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     value={sortLabel}
                     onChange={handleChange}
-                    input={<OutlinedInput label="Select sortable"/>}
+                    input={<OutlinedInput label={t('t.filters.sort')}/>}
                 >
                     {sorts && sorts.map((sort) => (
                         <MenuItem
                             key={sort.value}
                             value={sort.value}
                         >
-                            {sort.name}
+                            {t(sort.name)}
                         </MenuItem>
                     ))}
                 </Select>

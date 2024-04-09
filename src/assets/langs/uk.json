@@ -1,7 +1,26 @@
 {
+  "t.open.settings": "Відкрити налаштування",
   "t.pages.main": "Фільми",
   "t.pages.top": "ТОП фільмів",
   "t.pages.favorite": "Улюблені фільми",
-  "t.settings.profile": "Прифіль",
-  "t.settings.logout": "Вихід"
+  "t.settings.profile": "Профіль",
+  "t.settings.logout": "Вихід",
+  "t.filters.genres": "Обрати жанр",
+  "t.filters.years": "Обрати рік",
+  "t.filters.sort": "Сортувати по популярності",
+  "t.sort.desc": "Висока популярність",
+  "t.sort.asc": "Низька популярність",
+  "t.filters.clear": "Очистити",
+  "t.search.movie": "Пошук фільму",
+  "t.all.results": "Всі результати",
+  "t.load.more": "Показати більше",
+  "t.add.favorite": "Додати до улюблених",
+  "t.remove.favorite": "Видалати з улюблених",
+  "t.title.404": "Халепа!",
+  "t.desc.404": "На жаль, сталася несподівана помилка.",
+  "t.btn.404": "Повернутися назад",
+  "t.message.add.favorite": "Додано до улюблених",
+  "t.message.remove.favorite": "Видалено з улюблених",
+  "t.copy.success": "Успішно скопійовано",
+  "t.info.profile": "Інформація профілю"
 }

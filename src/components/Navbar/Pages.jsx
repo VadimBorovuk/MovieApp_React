@@ -10,7 +10,7 @@ const Pages = () => {
     const {t, i18n} = useTranslation();
 
     return (
-        <Box sx={{flexGrow: 1, display: {md: 'flex'}}}>
+        <Box sx={{flexGrow: 3, display: {md: 'flex'}}}>
             {
                 pages.map((page) => (<LinkItem to={page.path} key={page.path}>
                         {

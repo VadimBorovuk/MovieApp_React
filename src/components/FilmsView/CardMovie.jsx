@@ -18,10 +18,13 @@ import {useLocation} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
+import {useTranslation} from "react-i18next";
 
-const CardMovie = memo(({addToFavorite, film, genres}) => {
+const CardMovie = memo(({addToFavorite, film, genres, setSwitchTitle, switchTitle}) => {
+    const {t} = useTranslation();
+
     const [disableIcon, setDisableIcon] = useState(false)
-    const [switchTitle, setSwitchTitle] = useState('')
+
     const location = useLocation()
 
     const getGenre = ({genre_ids}) => {
@@ -62,7 +65,8 @@ const CardMovie = memo(({addToFavorite, film, genres}) => {
                 src={`${process.env.REACT_APP_API_PATH_IMAGE}/${film.poster_path}`}
                 alt="not found"/>
 
-            <Tooltip title={location.pathname !== '/favorite' ? !switchTitle ? 'Add to favorite' : 'Remove from favorite' : 'Remove from favorite'}>
+            <Tooltip title={location.pathname !== '/favorite' ? !switchTitle ?
+                t(('t.add.favorite')) : t(('t.remove.favorite')) : t(('t.remove.favorite'))}>
                 <RatingStyled
                     disabled={disableIcon}
                     max={1}

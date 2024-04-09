@@ -10,12 +10,14 @@ import Select from '@mui/material/Select';
 let years = [...Array(2025 - 1990).keys()].map(i => i + 1990);
 
 
-const SelectYears = ({yearLabel, handleChange}) => {
+const SelectYears = ({t, yearLabel, handleChange}) => {
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Select year</InputLabel>
+                <InputLabel id="demo-multiple-name-label">
+                    {t('t.filters.years')}
+                </InputLabel>
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"

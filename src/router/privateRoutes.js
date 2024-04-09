@@ -3,6 +3,8 @@ import {useAuth} from "../hooks/useAuth/use-auth";
 import ContentView from "../components/ContentView/ContentView";
 
 const PrivateRoutes = () => {
+
+
     const {isAuth} = useAuth()
 
     return (

@@ -1,7 +1,26 @@
 {
+  "t.open.settings": "Open settings",
   "t.pages.main": "Movies",
   "t.pages.top": "Top movies",
   "t.pages.favorite": "Favorite movies",
   "t.settings.profile": "Profile",
-  "t.settings.logout": "Logout"
+  "t.settings.logout": "Logout",
+  "t.filters.genres": "Select genres",
+  "t.filters.years": "Select year",
+  "t.filters.sort": "Select sortable",
+  "t.sort.desc": "High popular",
+  "t.sort.asc": "Low popular",
+  "t.filters.clear": "Clear",
+  "t.search.movie": "Search movie",
+  "t.all.results": "All results",
+  "t.load.more": "Load More",
+  "t.add.favorite": "Add to favorite",
+  "t.remove.favorite": "Remove from favorite",
+  "t.title.404": "Oops!",
+  "t.desc.404": "Sorry, an unexpected error has occurred.",
+  "t.btn.404": "Go back",
+  "t.message.add.favorite": "Added to favorite list",
+  "t.message.remove.favorite": "Removed from favorite list",
+  "t.copy.success": "Success copied",
+  "t.info.profile'": "Profile information"
 }

@@ -10,9 +10,11 @@ import {clearFilms, searchFilms, setPage} from "../../store/slices/filmsSearchSl
 import {Backdrop, CircularProgress} from "@mui/material";
 import {SearchBox, SearchContent, SearchData, SearchInput} from "./styled";
 import SearchView from "./Search/SearchView";
+import {useTranslation} from "react-i18next";
 
 
 const SearchDrawer = () => {
+    const {t} = useTranslation();
     const {loading, countItems, searchingFilms, page} = useSelector(state => state.sliceSearchFilms)
     const [open, setOpen] = React.useState(false);
     const [searchFilm, setSearchFilm] = useState('')
@@ -71,7 +73,7 @@ const SearchDrawer = () => {
                                 color: '#fff'
                             }
                         }}
-                        label="Search movie"
+                        label={t('t.search.movie')}
                         value={searchFilm}
                         onChange={e => setSearchFilm(e.target.value)}
                         variant="filled"/>
@@ -85,6 +87,7 @@ const SearchDrawer = () => {
                                 <CircularProgress color="inherit"/>
                             </Backdrop> :
                             <SearchView
+                                t={t}
                                 countItems={countItems}
                                 searching={searchingFilms}
                                 toggleDrawer={toggleDrawer}
