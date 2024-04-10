@@ -1,32 +1,45 @@
-import React, {useCallback, useEffect} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchCurrentFilm} from "../../store/slices/filmCurrentSlice";
-import ReactPlayer from 'react-player'
-import {CircularProgress, Badge, Accordion, AccordionSummary, AccordionDetails, Grid} from "@mui/material";
-import {
-    Movie, MovieData, MovieFields, MovieGenres,
-    MovieHead, MovieInfo, MovieView, Poster, Image, MovieRating,
-    MovieDuration, MovieVoices,
-    GenresStyled, GenreStyled, MovieVideo, View, ButtonBack, IconCompany, CompanyStyled, ActorsStyled
-} from "./styled";
-import StarIcon from '@mui/icons-material/Star';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useParams} from "react-router-dom";
 import moment from "moment/moment";
 import {fetchVideos} from "../../store/slices/videoListSlice";
-
-import AddReactionIcon from '@mui/icons-material/AddReaction';
 import {fetchActors} from "../../store/slices/actorsListSlice";
-import ActorCard from "../../components/FilmsView/ActorCard";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCurrentFilm} from "../../store/slices/filmCurrentSlice";
+import {AddFavoriteFilms} from "../../store/slices/filmsFavoriteSlice";
+
+import {
+    Movie, MovieData, MovieInfo,
+    MovieView, Poster, Image, View
+} from "./styled";
+
+
+import {useTranslation} from "react-i18next";
+import MovieActors from "./MovieActors";
+import MovieGenre from "./MovieGenre";
+import MovieSynopsis from "./MovieSynopsis";
+import MovieCompany from "./MovieCompany";
+import MovieTrailer from "./MovieTrailer";
+import SnackbarCopy from "./SnackbarCopy";
+import SnackbarFavorite from "./SnackbarFavorite";
+import MovieHeader from "./MovieHead";
+import {CircularProgress} from "@mui/material";
 
 const Film = () => {
+    const {t} = useTranslation();
+    const [message, setMessage] = useState(false)
+    const [switchFavorite, setSwitchFavorite] = useState(false)
+
+    const [messageCopy, setMessageCopy] = useState(false)
+
     const {id} = useParams()
     const movie = useSelector(state => state.sliceCurrentFilm)
     const videos = useSelector(state => state.sliceVideoList)
     const actors = useSelector(state => state.sliceActorsList)
     const dispatch = useDispatch()
 
-    // const navigate = useNavigate()
+    const copyLinkMovie = () => {
+        setMessageCopy(true)
+    }
 
     const generateData = useCallback((date) => {
         return moment(date).format('DD.MM.YYYY')
@@ -39,6 +52,16 @@ const Film = () => {
 
         return `${hour != 0 ? `${hour} hour` : ''}  ${minutes} min`
     }, [movie.current.runtime])
+
+    const changeIcon = (newValue, {id}) => {
+        setMessage(true)
+        setSwitchFavorite(newValue)
+        dispatch(AddFavoriteFilms({
+            "media_type": "movie",
+            "media_id": id,
+            "favorite": !!newValue
+        }))
+    }
 
     useEffect(() => {
         dispatch(fetchCurrentFilm({id, language: localStorage.getItem('lang')}))
@@ -58,134 +81,56 @@ const Film = () => {
                             </Poster>
                             <MovieData>
                                 <MovieInfo>
-                                    <MovieHead>
-                                        <p className="title">
-                                            {movie.current.title}
-                                        </p>
-                                        <Badge
-                                            sx={{
-                                                '.MuiBadge-badge': {
-                                                    fontSize: '15px'
-                                                },
-                                                '.MuiSvgIcon-root': {
-                                                    height: '1.3em',
-                                                    width: '1.3em'
-                                                }
-                                            }}
-                                            className="badget-votes"
-                                            color="success"
-                                            size="large"
-                                            badgeContent={movie.current.vote_count} max={50000}>
-                                            <AddReactionIcon/>
-                                        </Badge>
-                                    </MovieHead>
-                                    <MovieRating>
-                                        <MovieVoices>
-                                            <StarIcon/>
-                                            <span>{movie.current.vote_average}</span>
-                                        </MovieVoices>
-                                        <MovieDuration>
-                                            <span>
-                                                {generateRunTime(movie.current.runtime)}
-                                            </span>
-                                            <span>/</span>
-                                            <span>
-                                                {generateData(movie.current.release_date)}
-                                            </span>
-                                        </MovieDuration>
-                                    </MovieRating>
+                                    <MovieHeader
+                                        t={t}
+                                        movie={movie}
+                                        switchFavorite={switchFavorite}
+                                        changeIcon={changeIcon}
+                                        copyLinkMovie={copyLinkMovie}
+                                        generateRunTime={generateRunTime}
+                                        generateData={generateData}
+                                    />
 
-                                    <MovieGenres>
-                                        <Accordion sx={{
-                                            background: 'rgba(0, 0, 0, .3)',
-                                           '.MuiAccordionSummary-expandIconWrapper': {
-                                                color: '#fff'
-                                           }
-                                        }}>
-                                            <AccordionSummary
-                                                style={{color: '#fff'}}
-                                                expandIcon={<ExpandMoreIcon/>}
-                                                aria-controls="panel1-content"
-                                                id="panel1-header"
-                                            >
-                                                <p className="title" style={{fontSize: '22px'}}>
-                                                    The main actors
-                                                </p>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <Grid container spacing={2}>
-                                                    {actors && actors.results.map(item => {
-                                                        return <ActorCard key={item.id} {...item}/>
-                                                    })}
-                                                </Grid>
-                                            </AccordionDetails>
-                                        </Accordion>
-                                    </MovieGenres>
 
-                                    <MovieGenres>
-                                        <p className="title">
-                                            The genres
-                                        </p>
-                                        <GenresStyled>
-                                            {movie.current && movie.current.genres && movie.current.genres.map(item => {
-                                                return <GenreStyled key={item.id}>{item.name}</GenreStyled>
-                                            })}
-                                        </GenresStyled>
-                                    </MovieGenres>
+                                    <MovieActors
+                                        t={t}
+                                        actors={actors}
+                                    />
+                                    <MovieGenre
+                                        t={t}
+                                        movie={movie}
+                                    />
 
-                                    <MovieFields>
-                                        <p className="title">
-                                            Synopsis
-                                        </p>
-                                        <p className="description">
-                                            {movie.current.overview}
-                                        </p>
-                                    </MovieFields>
+                                    <MovieSynopsis
+                                        t={t}
+                                        movie={movie}
+                                    />
 
-                                    <MovieGenres>
-                                        <p className="title">
-                                            The production companies
-                                        </p>
-                                        <CompanyStyled>
-                                            <Grid container spacing={2}>
-                                                {movie.current && movie.current.production_companies && movie.current.production_companies.map(item => {
-                                                    return (
-                                                        item.logo_path ?
-                                                            <Grid item xs={3} key={item.id}>
-                                                                <IconCompany>
-                                                                    <img
-                                                                        src={`${process.env.REACT_APP_API_PATH_IMAGE}${item.logo_path}`}
-                                                                        alt=""/>
-                                                                </IconCompany>
-                                                            </Grid>: ''
-                                                    )
-                                                })}
-                                            </Grid>
-                                        </CompanyStyled>
-                                    </MovieGenres>
-
+                                    <MovieCompany
+                                        t={t}
+                                        movie={movie}
+                                    />
                                 </MovieInfo>
 
-                                <MovieVideo>
-                                    <p className="title">
-                                        Trailers
-                                    </p>
-
-                                    {videos.loading ?
-                                        <></> :
-                                        !videos.results.length ? <p className="title">
-                                                No videos
-                                            </p> :
-                                            <ReactPlayer
-                                                height={450}
-                                                width={'100%'}
-                                                controls={true}
-                                                url={videos.results}
-                                            />
-                                    }
-                                </MovieVideo>
+                                <MovieTrailer
+                                    t={t}
+                                    videos={videos}
+                                />
                             </MovieData>
                         </Movie>
+
+                        <SnackbarCopy
+                            t={t}
+                            messageCopy={messageCopy}
+                            setMessageCopy={setMessageCopy}
+                        />
+
+                        <SnackbarFavorite
+                            t={t}
+                            message={message}
+                            setMessage={setMessage}
+                            switchFavorite={switchFavorite}
+                        />
                     </View>
                 }
             </div>

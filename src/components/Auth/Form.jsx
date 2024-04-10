@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {TextField} from "@mui/material";
+import {Alert, Snackbar, TextField} from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {BoxStyled, FormStyled, LoadBtnStyled} from "./styled";
 
-const Form = ({title, handleClick, loading}) => {
+const Form = ({title, handleClick, loading, error, errBool, setErrBool}) => {
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -43,8 +43,7 @@ const Form = ({title, handleClick, loading}) => {
             </FormStyled>
             <LoadBtnStyled>
                 <LoadingButton
-                    sx={{width: '100%', height: '40px'}}
-                    size="small"
+                    sx={{width: '100%', height: '56px'}}
                     onClick={() =>
                         handleClick(email, pass, name)
                     }
@@ -54,6 +53,22 @@ const Form = ({title, handleClick, loading}) => {
                     {title}
                 </LoadingButton>
             </LoadBtnStyled>
+            <Snackbar
+                autoHideDuration={5000}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                open={errBool}
+                onClose={() => setErrBool()}
+            >
+                <Alert
+                    onClose={() => setErrBool()}
+                    severity='error'
+                    variant="filled"
+                    sx={{width: '100%'}}
+                >
+                    {error}
+                </Alert>
+            </Snackbar>
+
         </BoxStyled>
     );
 };

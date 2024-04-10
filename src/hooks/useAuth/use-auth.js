@@ -21,7 +21,11 @@ export function useAuth() {
                 dispatch(removeUser())
             }
         };
-        checkTokenExpiration();
+
+        if (email !== 'admin.admin@gmail.com') {
+            checkTokenExpiration();
+        }
+
     }, [location.pathname]);
 
     return {

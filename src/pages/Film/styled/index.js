@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
+import {Rating} from "@mui/material";
 
 export const MovieView = styled.div`
     padding: 10px 30px 50px;
@@ -123,18 +124,25 @@ export const MovieRating = styled.div`
     flex-wrap: wrap;
 `
 
+export const RatingFavorite = styled(Rating)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export const MovieVoices = styled.div`
     display: flex;
     align-items: center;
     color: #fff;
     background-color: rgba(0, 0, 0, .3);
-    padding: 4px 8px;
+    padding: 8px 8px;
     border-radius: 6px;
+    min-height: 25px;
 
     span {
         font-size: 18px;
         font-weight: bold;
-        margin-left: 5px;
+        margin: 0 5px;
     }
 `
 
@@ -142,8 +150,9 @@ export const MovieDuration = styled.div`
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, .3);
-    padding: 4px 8px;
+    padding: 8px 8px;
     border-radius: 6px;
+    min-height: 25px;
 
     span {
         font-style: italic;

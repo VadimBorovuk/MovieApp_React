@@ -2,11 +2,10 @@ import React from 'react';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import {blue} from "@mui/material/colors";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import ListItemText from "@mui/material/ListItemText";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
-import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TokenIcon from '@mui/icons-material/Token';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
@@ -43,7 +42,7 @@ const ListItemProfile = ({type, body, setBodyCopy}) => {
             {type !== 'name' ?
                 <CopyToClipboard text={body}
                                  onCopy={() => setBodyCopy(true)}>
-                    <LibraryAddCheckIcon/>
+                    <ContentCopyIcon/>
                 </CopyToClipboard> : ''
             }
 

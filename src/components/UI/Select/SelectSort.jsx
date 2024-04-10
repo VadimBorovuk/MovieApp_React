@@ -23,7 +23,7 @@ const SelectSort = ({t, sortLabel, handleChange}) => {
 
     return (
         <div>
-            <FormControl sx={{m: 1, width: 300}}>
+            <FormControl sx={{m: 1, width: 300}} size={'small'}>
                 <InputLabel id="demo-multiple-name-label">
                     {t('t.filters.sort')}
                 </InputLabel>

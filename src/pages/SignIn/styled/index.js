@@ -5,16 +5,22 @@ export const LoginPageStyled = styled.div`
     min-height: 100vh;
     min-width: 100vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background: url(${props => props.background}) no-repeat top center;
     background-size: cover;
-    article{
+
+    .block-auth {
         flex: 1 1 50%;
-        max-width: 50%; 
+        max-width: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @media screen and (max-width: 560px) {
+            flex: none;
+            max-width: none;
+        }
     }
 `
 
@@ -25,13 +31,22 @@ export const LoginViewStyled = styled.div`
     border: 1px solid #ededed;
     background: #fff;
     padding: 15px;
+
+    @media screen and (max-width: 560px){
+        width: 300px;
+    }
 `
 export const LoginTitleStyled = styled.h3`
-  text-transform: uppercase;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
     font-weight: bold;
     font-size: 22px;
     text-align: center;
     margin-bottom: 40px;
+
+    @media screen and (max-width: 560px) {
+        font-size: 19px;
+    }
 `
 
 export const LinkAuthStyled = styled(Link)`
@@ -42,6 +57,9 @@ export const LinkAuthStyled = styled(Link)`
     font-size: 20px;
     display: block;
     color: #000;
-    
+
+    @media screen and (max-width: 560px) {
+        font-size: 17px;
+    }
 `
 

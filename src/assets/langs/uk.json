@@ -11,6 +11,7 @@
   "t.sort.desc": "Висока популярність",
   "t.sort.asc": "Низька популярність",
   "t.filters.clear": "Очистити",
+  "t.filters.show": "Показати",
   "t.search.movie": "Пошук фільму",
   "t.all.results": "Всі результати",
   "t.load.more": "Показати більше",
@@ -22,5 +23,13 @@
   "t.message.add.favorite": "Додано до улюблених",
   "t.message.remove.favorite": "Видалено з улюблених",
   "t.copy.success": "Успішно скопійовано",
-  "t.info.profile": "Інформація профілю"
+  "t.tip.copy": "Копіювати",
+  "t.copy.link.success": "Успішно скопійовано силку",
+  "t.info.profile": "Інформація профілю",
+  "t.key.movie.actors": "Головні актори",
+  "t.key.movie.genres": "Жанри",
+  "t.key.movie.synopsis": "Короткий опис",
+  "t.key.movie.companies": "Виробничі компанії",
+  "t.key.movie.trailers": "Трейлер",
+  "t.key.movie.novideo": "Перегляд недоступний"
 }

@@ -11,6 +11,7 @@
   "t.sort.desc": "High popular",
   "t.sort.asc": "Low popular",
   "t.filters.clear": "Clear",
+  "t.filters.show": "Show",
   "t.search.movie": "Search movie",
   "t.all.results": "All results",
   "t.load.more": "Load More",
@@ -22,5 +23,14 @@
   "t.message.add.favorite": "Added to favorite list",
   "t.message.remove.favorite": "Removed from favorite list",
   "t.copy.success": "Success copied",
-  "t.info.profile'": "Profile information"
+  "t.tip.copy": "Copy",
+  "t.copy.link.success": "Success link copied",
+  "t.info.profile": "Profile information",
+  "t.key.movie.actors": "The main actors",
+  "t.key.movie.genres": "The genres",
+  "t.key.movie.synopsis": "Synopsis",
+  "t.key.movie.companies": " The production companies",
+  "t.key.movie.trailers": " Trailers",
+  "t.key.movie.novideo": " No videos"
+
 }

@@ -35,5 +35,5 @@ export const FiltersStyled = styled.div`
 `
 
 export const ButtonStyled = styled(Button)`
-    margin-left: 20px;
+    margin: 0 10px!important;
 `

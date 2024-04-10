@@ -1,22 +1,8 @@
 import React from 'react';
-import {ActorStyled, CardStyled} from "./styled";
-import {Card, CardContent, CardMedia, Grid} from "@mui/material";
+import {CardStyled} from "./styled";
+import {Card, CardMedia, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-{/*<ActorStyled>*/
-}
-{/*    <img src={profile_path} alt=""/>*/
-}
-{/*    <div className="info-actor">*/
-}
-{/*        <p>{original_name}</p>*/
-}
-{/*        <p>{character}</p>*/
-}
-{/*    </div>*/
-}
-{/*</ActorStyled>*/
-}
 
 const ActorCard = ({original_name, profile_path, character}) => {
     return (

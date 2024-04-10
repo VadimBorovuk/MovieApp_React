@@ -7,7 +7,7 @@ import cinemaBackground from "../../assets/images/cinemaBack.jpg";
 const SignInPage = () => {
     return (
         <LoginPageStyled background={cinemaBackground}>
-            <article>
+            <div className="block-auth">
                 <LoginViewStyled>
                     <LoginTitleStyled>
                         login page
@@ -17,8 +17,8 @@ const SignInPage = () => {
                         sign up
                     </LinkAuthStyled>
                 </LoginViewStyled>
-            </article>
-            <article/>
+            </div>
+            <div className="block-auth"></div>
         </LoginPageStyled>
     );
 };

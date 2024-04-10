@@ -13,8 +13,10 @@ import SelectYears from "../../components/UI/Select/SelectYears";
 import SelectSort from "../../components/UI/Select/SelectSort";
 import {ButtonStyled, ContentBlock, ContentDiscover, FiltersStyled, MainDiscover} from "./styled";
 import {useTranslation} from "react-i18next";
+import {useSearchParams} from "react-router-dom";
 
 const DiscoverPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const {t} = useTranslation();
 
     const {genres} = useSelector(state => state.sliceGenreList)
@@ -31,55 +33,58 @@ const DiscoverPage = () => {
     const [yearLabel, setYearLabel] = useState([]);
     const [sortLabel, setSortLabel] = useState([]);
 
-    const query = useQuery({
+    const query = useQuery(searchParams.get('page') ? {
+        page: searchParams.get('page'),
+        with_genres: searchParams.get('with_genres'),
+        primary_release_year: searchParams.get('primary_release_year'),
+        sort_by: searchParams.get('sort_by'),
+        language: localStorage.getItem('lang')
+    } : {
         page,
         language: localStorage.getItem('lang')
     })
+
+    const showFilters = () => {
+        let queryData = {
+            ...query,
+            page: 1,
+            with_genres: genreName.join(','),
+            primary_release_year: yearLabel,
+            sort_by: sortLabel,
+        }
+        getDiscoverFilms(queryData)
+        setSearchParams(queryData)
+        handlePage(1)
+    }
 
     const handleChangeGenre = (event) => {
         const {target: {value}} = event;
         setGenreName(
             typeof value === 'string' ? value.split(',') : value,
         );
-        getDiscoverFilms({
-            ...query,
-            page: 1,
-            with_genres: value.join(','),
-            primary_release_year: yearLabel,
-            sort_by: sortLabel,
-        })
-        handlePage(1)
+        // getDiscoverFilms({
+        //     ...query,
+        //     page: 1,
+        //     with_genres: value.join(','),
+        //     primary_release_year: yearLabel,
+        //     sort_by: sortLabel,
+        // })
     };
 
     const handleChangeYear = (event) => {
         const {target: {value}} = event;
         setYearLabel(value);
-        getDiscoverFilms({
-            ...query,
-            page: 1,
-            primary_release_year: value,
-            with_genres: genreName.join(','),
-            sort_by: sortLabel
-        })
-        handlePage(1)
     };
 
     const handleChangeSort = (event) => {
         const {target: {value}} = event;
         setSortLabel(value);
-        getDiscoverFilms({
-            ...query,
-            page: 1,
-            sort_by: value,
-            primary_release_year: yearLabel,
-            with_genres: genreName.join(',')
-        })
-        handlePage(1)
     };
 
     const clearFilters = () => {
         handlePage(1)
         setGenreName([])
+        setSearchParams({})
         setYearLabel(null)
         setSortLabel(null)
 
@@ -104,6 +109,15 @@ const DiscoverPage = () => {
     }, [])
 
     useEffect(() => {
+        if(searchParams.get('with_genres')){
+            setGenreName([searchParams.get('with_genres')])
+        }
+        if(searchParams.get('primary_release_year')){
+            setYearLabel([searchParams.get('primary_release_year')])
+        }
+        if(searchParams.get('sort_by')){
+            setSortLabel([searchParams.get('sort_by')])
+        }
         getDiscoverFilms(query)
     }, [query])
 
@@ -136,6 +150,13 @@ const DiscoverPage = () => {
                                 handleChange={handleChangeSort}
                             />
                             <ButtonStyled variant="contained"
+                                          color="success"
+                                          onClick={() => showFilters()}>
+                                {t('t.filters.show')}
+                            </ButtonStyled>
+
+                            <ButtonStyled variant="contained"
+                                          color="error"
                                           onClick={() => clearFilters()}>
                                 {t('t.filters.clear')}
                             </ButtonStyled>

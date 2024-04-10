@@ -7,6 +7,9 @@ import {setUser} from "../../store/slices/userSlice";
 import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
+    const [error, setError] = useState('')
+    const [errBool, setErrBool] = useState(false)
+
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -27,7 +30,8 @@ const Registration = () => {
             })
 
             .catch((error)=>{
-                console.log(error.message)
+                setError(error.message)
+                setErrBool(true)
                 setLoading(false)
             })
     }
@@ -36,6 +40,9 @@ const Registration = () => {
         <Form
             title="Sign up"
             loading={loading}
+            error={error}
+            errBool={errBool}
+            setErrBool={()=> setErrBool(false)}
             handleClick={handleRegister}
         />
     );
