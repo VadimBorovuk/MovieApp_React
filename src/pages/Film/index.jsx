@@ -90,8 +90,6 @@ const Film = () => {
                                         generateRunTime={generateRunTime}
                                         generateData={generateData}
                                     />
-
-
                                     <MovieActors
                                         t={t}
                                         actors={actors}

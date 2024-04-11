@@ -8,6 +8,22 @@ export const pages = [
         path: 'favorite'
     }
 ];
+
+export const pagesMobile = [
+    {
+        name: 'main',
+        path: '/'
+    },
+    {
+        name: 'top',
+        path: 'top'
+    },
+    {
+        name: 'favorite',
+        path: 'favorite'
+    }
+];
+
 export const settings = [
     {
         name: 'profile',

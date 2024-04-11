@@ -19,7 +19,7 @@ const MovieActors = ({t, actors}) => {
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    <p className="title" style={{fontSize: '22px'}}>
+                    <p className="title-actors">
                         {t('t.key.movie.actors')}
                     </p>
                 </AccordionSummary>

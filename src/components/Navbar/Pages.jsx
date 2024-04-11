@@ -10,13 +10,13 @@ const Pages = () => {
     const {t, i18n} = useTranslation();
 
     return (
-        <Box sx={{flexGrow: 3, display: {md: 'flex'}}}>
+        <Box sx={{flexGrow: 3, display: {xs: 'none', sm: 'flex'}}}>
             {
                 pages.map((page) => (<LinkItem to={page.path} key={page.path}>
                         {
                             page.name === 'top' ?
-                                <StarsIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
-                                : <FavoriteIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                                <StarsIcon sx={{display: {xs: 'none', sm: 'flex'}, mr: 1}}/>
+                                : <FavoriteIcon sx={{display: {xs: 'none', sm: 'flex'}, mr: 1}}/>
                         }
 
                         {t(`t.pages.${page.name}`)}

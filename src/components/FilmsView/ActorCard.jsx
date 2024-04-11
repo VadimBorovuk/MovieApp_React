@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 
 const ActorCard = ({original_name, profile_path, character}) => {
     return (
-        <Grid item xs={3}>
-            <Card sx={{maxWidth: 345, boxShadow: '0 8px 18px #1976d2'}}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+            <Card sx={{boxShadow: '0 8px 18px #1976d2'}}>
                 <CardMedia
                     sx={{height: 200}}
                     image={profile_path}

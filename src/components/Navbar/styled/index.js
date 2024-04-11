@@ -17,6 +17,14 @@ export const LinkItem = styled(NavLink)`
         padding: 5px 7px;
         color: #000000;
     }
+    
+    @media screen and (max-width: 700px) {
+        font-size: 13px;
+    }
+
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
 `;
 
 export const ButtonLangStyled = styled(Button)`

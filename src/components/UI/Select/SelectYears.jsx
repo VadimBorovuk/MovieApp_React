@@ -5,6 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {FormControlStyled} from "../styled";
 
 
 let years = [...Array(2025 - 1990).keys()].map(i => i + 1990);
@@ -14,7 +15,7 @@ const SelectYears = ({t, yearLabel, handleChange}) => {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }} size={"small"}>
+            <FormControlStyled sx={{ m: 1 }} size={"small"}>
                 <InputLabel id="demo-multiple-name-label">
                     {t('t.filters.years')}
                 </InputLabel>
@@ -34,7 +35,7 @@ const SelectYears = ({t, yearLabel, handleChange}) => {
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl>
+            </FormControlStyled>
         </div>
     );
 }

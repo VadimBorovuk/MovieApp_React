@@ -8,7 +8,7 @@ import useDebounce from "../../hooks/fetchHooks/useDebounce";
 import {useDispatch, useSelector} from "react-redux";
 import {clearFilms, searchFilms, setPage} from "../../store/slices/filmsSearchSlice";
 import {Backdrop, CircularProgress} from "@mui/material";
-import {SearchBox, SearchContent, SearchData, SearchInput} from "./styled";
+import {SearchBox, SearchContent, SearchInput} from "./styled";
 import SearchView from "./Search/SearchView";
 import {useTranslation} from "react-i18next";
 
@@ -37,9 +37,6 @@ const SearchDrawer = () => {
         } else {
             dispatch(clearFilms())
         }
-        // return () => {
-        //     dispatch(clearFilms())
-        // };
     }, [debouncedSearchTerm, page, dispatch]);
 
 

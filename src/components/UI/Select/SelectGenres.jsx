@@ -2,16 +2,16 @@ import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {useTranslation} from "react-i18next";
+import {FormControlStyled} from "../styled";
 
 
- const SelectGenres = ({t, genreName, handleChange, genres}) => {
+
+ const SelectGenres = ({t, genreLabel, handleChange, genres}) => {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }} size={"small"}>
+            <FormControlStyled sx={{ m: 1}} size={"small"}>
                 <InputLabel id="demo-multiple-name-label">
                     {t('t.filters.genres')}
                 </InputLabel>
@@ -19,7 +19,7 @@ import {useTranslation} from "react-i18next";
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    value={genreName}
+                    value={genreLabel}
                     onChange={handleChange}
                     input={<OutlinedInput label={t('t.filters.genres')} />}
                 >
@@ -32,7 +32,7 @@ import {useTranslation} from "react-i18next";
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl>
+            </FormControlStyled>
         </div>
     );
 }

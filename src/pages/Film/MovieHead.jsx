@@ -36,11 +36,11 @@ const MovieHeader = ({movie, t, switchFavorite, changeIcon, copyLinkMovie, gener
 
             <MovieRating>
                 <div style={{display: "flex", alignItems: "center"}}>
-                    <MovieVoices style={{marginRight: '10px'}}>
+                    <MovieVoices style={{marginRight: '9px'}}>
                         <StarIcon/>
                         <span>{movie.current.vote_average}</span>
                     </MovieVoices>
-                    <MovieVoices style={{marginRight: '10px'}}>
+                    <MovieVoices style={{marginRight: '9px'}}>
                         <Tooltip
                             title={!switchFavorite ? t('t.add.favorite') : t('t.remove.favorite')}>
                             <RatingFavorite
@@ -57,7 +57,7 @@ const MovieHeader = ({movie, t, switchFavorite, changeIcon, copyLinkMovie, gener
                             />
                         </Tooltip>
                     </MovieVoices>
-                    <MovieVoices>
+                    <MovieVoices style={{marginRight: '9px'}}>
                         <CopyToClipboard style={{cursor: 'pointer'}}
                                          text={window.location.href}
                                          onCopy={() => copyLinkMovie()}>

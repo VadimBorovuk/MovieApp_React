@@ -14,6 +14,7 @@ import {fetchGenres} from "../../store/slices/genreListSlice";
 import {LinkItem} from "./styled";
 import {useTranslation} from "react-i18next";
 import {useDispatch} from "react-redux";
+import PagesMobile from "../UI/PagesMobile";
 
 const theme = createTheme({
     palette: {
@@ -39,12 +40,14 @@ const Navbar = () => {
     return <ThemeProvider theme={theme}>
         <AppBar position="static" color="ochre"
                 style={{boxShadow: '0 8px 18px #1976d2', borderRadius: 25, padding: '5px 0'}}>
-
             <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <DrawerUI/>
+                <Toolbar disableGutters sx={{justifyContent: 'space-between'}}>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <PagesMobile/>
+                        <DrawerUI/>
+                    </div>
                     <LinkItem to='/'>
-                        <MovieIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                        <MovieIcon sx={{ mr: 1}}/>
                         {t('t.pages.main')}
                     </LinkItem>
 

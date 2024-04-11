@@ -13,7 +13,7 @@ const MovieCompany = ({t, movie}) => {
                     {movie.current && movie.current.production_companies && movie.current.production_companies.map(item => {
                         return (
                             item.logo_path ?
-                                <Grid item xs={3} key={item.id}>
+                                <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                                     <IconCompany>
                                         <img
                                             src={`${process.env.REACT_APP_API_PATH_IMAGE}${item.logo_path}`}
