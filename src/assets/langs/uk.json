@@ -26,11 +26,16 @@
   "t.copy.success": "Успішно скопійовано",
   "t.tip.copy": "Копіювати",
   "t.copy.link.success": "Успішно скопійовано силку",
+  "t.tip.copy.filters": "Успішно скопійовано фільтри",
   "t.info.profile": "Інформація профілю",
   "t.key.movie.actors": "Головні актори",
   "t.key.movie.genres": "Жанри",
   "t.key.movie.synopsis": "Короткий опис",
   "t.key.movie.companies": "Виробничі компанії",
   "t.key.movie.trailers": "Трейлер",
-  "t.key.movie.novideo": "Перегляд недоступний"
+  "t.key.movie.novideo": "Перегляд недоступний",
+  "t.search.popular": "Популярність",
+  "t.search.vote": "Кі-сть голосів",
+  "t.search.year": "Реліз",
+  "t.err.empty.filters": "Поля порожні! Оберіть фільтри для пошуку"
 }

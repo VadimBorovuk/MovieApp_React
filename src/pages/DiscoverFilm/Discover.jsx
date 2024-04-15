@@ -6,7 +6,7 @@ import {fetchDiscoverFilms} from "../../store/slices/filmsListSlice";
 import usePagination from "../../hooks/fetchHooks/usePagination";
 import useQuery from "../../hooks/fetchHooks/useQuery";
 
-import {Backdrop, CircularProgress} from "@mui/material";
+import {Alert, Backdrop, CircularProgress, Snackbar} from "@mui/material";
 import View from "../../components/FilmsView/View";
 import {ContentBlock, ContentDiscover, MainDiscover} from "./styled";
 import {useTranslation} from "react-i18next";
@@ -14,9 +14,12 @@ import {useSearchParams} from "react-router-dom";
 import Filters from "../../components/FilmsView/Filters";
 
 const DiscoverPage = () => {
+    const [filtersCopy, setFiltersCopy] = useState(false)
+    const [errEmptyFilters, setErrEmptyFilters] = useState(false)
+
     const [genreLabel, setGenreLabel] = useState([]);
-    const [yearLabel, setYearLabel] = useState([]);
-    const [sortLabel, setSortLabel] = useState([]);
+    const [yearLabel, setYearLabel] = useState('');
+    const [sortLabel, setSortLabel] = useState('');
 
     const [searchParams, setSearchParams] = useSearchParams();
     const {t} = useTranslation();
@@ -47,13 +50,6 @@ const DiscoverPage = () => {
         setGenreLabel(
             typeof value === 'string' ? value.split(',') : value,
         );
-        // getDiscoverFilms({
-        //     ...query,
-        //     page: 1,
-        //     with_genres: value.join(','),
-        //     primary_release_year: yearLabel,
-        //     sort_by: sortLabel,
-        // })
     };
 
     const handleChangeYear = (event) => {
@@ -81,16 +77,24 @@ const DiscoverPage = () => {
     }
 
     const showFilters = () => {
-        let queryData = {
-            ...query,
-            page: 1,
-            with_genres: genreLabel.join(','),
-            primary_release_year: yearLabel,
-            sort_by: sortLabel,
+
+        console.log('yearLabel', yearLabel, !!yearLabel.length)
+
+        if (!!genreLabel.length || (!!yearLabel.length || yearLabel) || !!sortLabel.length) {
+            let queryData = {
+                ...query,
+                page: 1,
+                with_genres: genreLabel.join(','),
+                primary_release_year: yearLabel,
+                sort_by: sortLabel,
+            }
+            getDiscoverFilms(queryData)
+            setSearchParams(queryData)
+            handlePage(1)
+            setErrEmptyFilters(false)
+        } else {
+            setErrEmptyFilters(true)
         }
-        getDiscoverFilms(queryData)
-        setSearchParams(queryData)
-        handlePage(1)
     }
 
     const clearFilters = () => {
@@ -152,6 +156,8 @@ const DiscoverPage = () => {
                             handleChangeSort={handleChangeSort}
                             showFilters={showFilters}
                             clearFilters={clearFilters}
+                            setFiltersCopy={setFiltersCopy}
+                            filtersCopy={filtersCopy}
                         />
 
                         <View
@@ -166,6 +172,35 @@ const DiscoverPage = () => {
                 }
             </ContentDiscover>
 
+            <Snackbar
+                open={filtersCopy}
+                autoHideDuration={2000}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                onClose={() => setFiltersCopy(false)}>
+                <Alert
+                    onClose={() => setFiltersCopy(false)}
+                    severity={'success'}
+                    variant="filled"
+                    sx={{width: '100%'}}
+                >
+                    {t('t.tip.copy.filters')}
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                open={errEmptyFilters}
+                autoHideDuration={3000}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                onClose={() => setErrEmptyFilters(false)}>
+                <Alert
+                    onClose={() => setErrEmptyFilters(false)}
+                    severity={'error'}
+                    variant="filled"
+                    sx={{width: '100%'}}
+                >
+                    {t('t.err.empty.filters')}
+                </Alert>
+            </Snackbar>
         </MainDiscover>
     );
 };

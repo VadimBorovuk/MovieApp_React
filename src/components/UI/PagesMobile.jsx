@@ -5,67 +5,75 @@ import {ListItemIcon, ListSubheader} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useTranslation} from "react-i18next";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import StarsIcon from "@mui/icons-material/Stars";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MovieIcon from '@mui/icons-material/Movie';
 import {PagesMobileBox} from "./styled";
-import {pagesMobile} from "../../assets/data/Navbar";
-import {useNavigate} from "react-router-dom";
+import {LinkItem} from "../Navbar/styled";
+import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
+import {pages} from "../../assets/data/Navbar";
 
 
 const PagesMobile = () => {
     const {t} = useTranslation();
     const [open, setOpen] = React.useState(false);
-    const navigation = useNavigate();
+    let location = useLocation()
 
-    const goPath = (path) => {
-        setOpen(false)
-        setTimeout(()=>{
-            navigation(path)
-        },100)
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+    }, [window.innerWidth]);
+
+    const handleResize = (e) => {
+        if (window.innerWidth > 600) {
+            setOpen(false)
+        }
     }
 
-    const toggleMobile = (newOpen) => () => {
-        setOpen(newOpen);
-    };
+    useEffect(() => {
+        setOpen(false)
+    }, [location]);
 
     return (
         <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
-            <Button onClick={toggleMobile(true)}>
+            <Button onClick={() => setOpen(true)}>
                 <MenuIcon sx={{color: '#fff'}}/>
             </Button>
-            <Drawer open={open} onClose={toggleMobile(false)}>
-                <PagesMobileBox role="presentation">
-                    <List
-                        sx={{width: '100%'}}
-                        component="nav"
-                        aria-labelledby="nested-list-subheader"
-                        subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                {t(`t.pages.mobile`)}
-                            </ListSubheader>
-                        }
-                    >
-                        {
-                            pagesMobile.map((page) => {
-                                return <ListItemButton key={page.name} onClick={() => goPath(page.path)}>
-                                    <ListItemIcon>
-                                        {
+            <Drawer open={open} onClose={() => setOpen(false)}>
+                <PagesMobileBox>
+                    {
+                        pages.map((page) => (
+                            <LinkItem to={page.path} key={page.path}
+                                      className="link-mobile">
+                                <Button className="link-btn" variant="outlined"
+                                        startIcon={
                                             page.name === 'top' ? <StarsIcon/> :
                                                 page.name === 'favorite' ? <FavoriteIcon/> :
                                                     <MovieIcon/>
-                                        }
-                                    </ListItemIcon>
-                                    <ListItemText primary={t(`t.pages.${page.name}`)}/>
-                                </ListItemButton>
-                            })
-                        }
-
-                    </List>
+                                        }>
+                                    {t(`t.pages.${page.name}`)}
+                                </Button>
+                            </LinkItem>
+                        ))
+                    }
                 </PagesMobileBox>
+
+
+                {/*{*/}
+                {/*    pagesMobile.map((page) => {*/}
+                {/*        return <ListItemButton key={page.name} onClick={() => goPath(page.path)}>*/}
+                {/*            <ListItemIcon>*/}
+                {/*                {*/}
+                {/*                    page.name === 'top' ? <StarsIcon/> :*/}
+                {/*                        page.name === 'favorite' ? <FavoriteIcon/> :*/}
+                {/*                            <MovieIcon/>*/}
+                {/*                }*/}
+                {/*            </ListItemIcon>*/}
+                {/*            <ListItemText primary={t(`t.pages.${page.name}`)}/>*/}
+                {/*        </ListItemButton>*/}
+                {/*    })*/}
+                {/*}*/}
             </Drawer>
         </Box>
     );

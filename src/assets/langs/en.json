@@ -25,6 +25,7 @@
   "t.message.remove.favorite": "Removed from favorite list",
   "t.copy.success": "Success copied",
   "t.tip.copy": "Copy",
+  "t.tip.copy.filters": "Success copied filters",
   "t.copy.link.success": "Success link copied",
   "t.info.profile": "Profile information",
   "t.key.movie.actors": "The main actors",
@@ -32,6 +33,9 @@
   "t.key.movie.synopsis": "Synopsis",
   "t.key.movie.companies": " The production companies",
   "t.key.movie.trailers": " Trailers",
-  "t.key.movie.novideo": " No videos"
-
+  "t.key.movie.novideo": " No videos",
+  "t.search.popular": " Popularity",
+  "t.search.vote": " Vote count",
+  "t.search.year": "Release",
+  "t.err.empty.filters": "The fields are empty! Select filters for searching"
 }

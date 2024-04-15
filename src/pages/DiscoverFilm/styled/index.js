@@ -26,7 +26,7 @@ export const MainDiscover = styled.div`
 export const FiltersStyled = styled.div`
     border-radius: 10px;
     padding: 15px 20px;
-    background-color: #e3e3e3;
+    background-color: #e2e6ec;
     display: flex;
     align-items: center;
     flex-wrap: wrap;

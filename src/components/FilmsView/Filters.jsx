@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ButtonStyled, FiltersStyled} from "../../pages/DiscoverFilm/styled";
 import SelectGenres from "../UI/Select/SelectGenres";
 import SelectYears from "../UI/Select/SelectYears";
 import SelectSort from "../UI/Select/SelectSort";
+import {CopyToClipboard} from "react-copy-to-clipboard/src";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Tooltip from "@mui/material/Tooltip";
 
 const Filters = ({
                      t,
@@ -14,8 +17,11 @@ const Filters = ({
                      handleChangeYear,
                      handleChangeSort,
                      showFilters,
-                     clearFilters
+                     clearFilters,
+                     setFiltersCopy
                  }) => {
+
+
     return (
         <FiltersStyled>
             <SelectGenres
@@ -45,6 +51,22 @@ const Filters = ({
                           onClick={() => clearFilters()}>
                 {t('t.filters.clear')}
             </ButtonStyled>
+
+
+
+            {
+                (!!genreLabel.length || yearLabel || !!sortLabel.length) ?
+                <CopyToClipboard
+                    style={{cursor: 'pointer'}}
+                    text={window.location.href}
+                    onCopy={() => setFiltersCopy(true)}>
+                    <Tooltip
+                        title={t('t.tip.copy')}>
+                        <ContentCopyIcon/>
+                    </Tooltip>
+                </CopyToClipboard> : ''
+            }
+
         </FiltersStyled>
     );
 };

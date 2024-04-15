@@ -5,8 +5,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {FormControlStyled} from "../styled";
 
-
-
  const SelectGenres = ({t, genreLabel, handleChange, genres}) => {
 
     return (

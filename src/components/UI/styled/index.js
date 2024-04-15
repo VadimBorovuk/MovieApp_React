@@ -30,7 +30,7 @@ export const CardFilm = styled.div`
             @media screen and (max-width: 600px) {
                 flex: 1 1 100%;
                 max-width: 100%;
-                max-height: 450px;
+                max-height: 350px;
             }
         }
 
@@ -48,8 +48,13 @@ export const CardFilm = styled.div`
             padding: 15px 20px;
 
             .description-title {
-                font-size: 22px;
+                font-size: 24px;
                 color: gold;
+
+                @media screen and (max-width: 600px) {
+                    font-size: 22px;
+                    margin: 0 0 10px;
+                }
             }
 
             .desc-contact {
@@ -63,16 +68,33 @@ export const CardFilm = styled.div`
                     max-width: 25%;
                     display: flex;
                     flex-direction: column;
+                    font-weight: bold;
 
                     &__value {
                         font-size: 22px;
                         letter-spacing: 2px;
                         color: gold;
+
+
+                        @media screen and (max-width: 600px) {
+                            font-size: 16px;
+                        }
                     }
 
                     &__label {
                         color: #fff;
                         font-size: 14px;
+
+                        @media screen and (max-width: 600px) {
+                            font-size: 13px;
+                        }
+                    }
+                    
+
+                    @media screen and (max-width: 600px) {
+                        flex: 1 1 50%;
+                        max-width: 50%;
+                        margin-bottom: 20px;
                     }
                 }
             }
@@ -111,13 +133,15 @@ export const SearchBox = styled(Box)`
     background-color: #373b41;
 
     @media screen and (max-width: 600px) {
-        width: 380px;
+        width: 290px;
     }
 `
 
 export const PagesMobileBox = styled(Box)`
     width: 290px;
     min-height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
     //background-color: #373b41;
 `
 
@@ -154,6 +178,11 @@ export const SearchNotData = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 600px) {
+        align-items: baseline;
+        margin-top: 20px;
+    }
 
     img {
         border-radius: 20px;

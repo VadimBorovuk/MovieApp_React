@@ -1,24 +1,10 @@
 import * as React from 'react';
-import {useTheme} from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {FormControlStyled} from "../styled";
-
-
-let sorts = [
-    {
-        value: 'vote_count.desc',
-        name: 't.sort.desc'
-    },
-    {
-        value: 'vote_count.asc',
-        name: 't.sort.asc'
-    }
-];
-
+import {sorts} from "../../../assets/data/filters";
 
 const SelectSort = ({t, sortLabel, handleChange}) => {
 

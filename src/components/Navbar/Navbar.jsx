@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 
-import MovieIcon from '@mui/icons-material/Movie';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +9,6 @@ import LanguageDown from '../Navbar/Langs'
 import ProfileDown from '../Navbar/Profile'
 import Pages from '../Navbar/Pages'
 import {fetchGenres} from "../../store/slices/genreListSlice";
-import {LinkItem} from "./styled";
 import {useTranslation} from "react-i18next";
 import {useDispatch} from "react-redux";
 import PagesMobile from "../UI/PagesMobile";
@@ -46,11 +43,6 @@ const Navbar = () => {
                         <PagesMobile/>
                         <DrawerUI/>
                     </div>
-                    <LinkItem to='/'>
-                        <MovieIcon sx={{ mr: 1}}/>
-                        {t('t.pages.main')}
-                    </LinkItem>
-
                     <Pages/>
 
                     <Box sx={{flexGrow: 0, display: 'flex', alignItems: 'center'}}>

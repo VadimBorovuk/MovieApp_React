@@ -74,6 +74,7 @@ const SearchDrawer = () => {
                         value={searchFilm}
                         onChange={e => setSearchFilm(e.target.value)}
                         variant="filled"/>
+
                     <Divider/>
 
                     <SearchContent>

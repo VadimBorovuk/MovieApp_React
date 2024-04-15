@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useNavigate} from "react-router-dom";
 import {CardFilm, PreviewImage} from "./styled";
 import {GenresSearchStyled, GenreStyled} from "../FilmsView/styled";
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
+import moment from "moment/moment";
 
 
 const SearchFilm = ({film, toggleDrawer}) => {
+    const {t} = useTranslation();
+
     const {genres} = useSelector(state => state.sliceGenreList)
 
     const navigate = useNavigate()
@@ -18,8 +22,11 @@ const SearchFilm = ({film, toggleDrawer}) => {
         }, {});
 
         return genre_ids.map(id => genreMap[id]);
-
     }
+
+    const generateDate = useMemo(() => {
+        return moment(film.release_date).format('YYYY')
+    }, [film.id])
 
     const openFilmPath = () => {
         toggleDrawer()
@@ -42,12 +49,20 @@ const SearchFilm = ({film, toggleDrawer}) => {
                     </GenresSearchStyled>
                     <div className="desc-contact">
                         <div className="desc-info">
+                            <span className="desc-info__value">{generateDate}</span>
+                            <span className="desc-info__label">
+                                   {t('t.search.year')}
+                            </span>
+                        </div>
+                        <div className="desc-info">
                             <span className="desc-info__value">{film.vote_average}</span>
-                            <span className="desc-info__label">Popularity</span>
+                            <span className="desc-info__label">
+                                   {t('t.search.popular')}
+                            </span>
                         </div>
                         <div className="desc-info">
                             <span className="desc-info__value">{film.vote_count}</span>
-                            <span className="desc-info__label">Vote count</span>
+                            <span className="desc-info__label">{t('t.search.vote')}</span>
                         </div>
                     </div>
 

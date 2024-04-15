@@ -1,16 +1,5 @@
 export const pages = [
     {
-        name: 'top',
-        path: 'top'
-    },
-    {
-        name: 'favorite',
-        path: 'favorite'
-    }
-];
-
-export const pagesMobile = [
-    {
         name: 'main',
         path: '/'
     },

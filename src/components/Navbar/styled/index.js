@@ -9,22 +9,41 @@ export const LinkItem = styled(NavLink)`
     margin-right: 15px;
     text-decoration: none;
     font-size: 16px;
-    color: #fff;
+    
+    &.link-desktop{
+        color: #fff;
 
-    &.active {
-        background: white;
-        border-radius: 15px;
-        padding: 5px 7px;
-        color: #000000;
+        @media screen and (max-width: 600px) {
+            display: none;
+        }
+
+        &.active {
+            background: white;
+            border-radius: 15px;
+            padding: 5px 7px;
+            color: #000000;
+        }
     }
+    &.link-mobile{
+        .link-btn{
+            width: 100%;
+            margin-bottom: 10px;        
+        }
+        &.active {
+            
+            .link-btn{
+                background: #cbd9e8;
+            }
+        }
+    }
+
+    
     
     @media screen and (max-width: 700px) {
         font-size: 13px;
     }
 
-    @media screen and (max-width: 600px) {
-        display: none;
-    }
+   
 `;
 
 export const ButtonLangStyled = styled(Button)`
