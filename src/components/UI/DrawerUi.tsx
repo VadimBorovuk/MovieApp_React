@@ -23,9 +23,10 @@ const SearchDrawer: FC<{ t: LangI118Type }> = ({t}) => {
   const debouncedSearchTerm = useDebounce(searchFilm, 500);
   const dispatch = useAppDispatch()
 
-  const toggleDrawer = (newOpen: boolean) => () => {
+  const toggleDrawer = (newOpen: boolean) => {
     setOpen(newOpen);
   };
+
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -51,10 +52,10 @@ const SearchDrawer: FC<{ t: LangI118Type }> = ({t}) => {
 
   return (
       <div>
-        <Button onClick={toggleDrawer(true)}>
+        <Button onClick={() => toggleDrawer(true)}>
           <ScreenSearchDesktopIcon sx={{color: '#fff'}}/>
         </Button>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
+        <Drawer open={open} onClose={() => toggleDrawer(false)}>
           <SearchBox role="presentation">
             <SearchInput
                 sx={{
@@ -89,7 +90,7 @@ const SearchDrawer: FC<{ t: LangI118Type }> = ({t}) => {
                       t={t}
                       countItems={countItems}
                       searching={searchingFilms}
-                      toggleDrawer={toggleDrawer}
+                      handleDrawer={toggleDrawer}
                       loadMore={loadMore}
                   />
               }

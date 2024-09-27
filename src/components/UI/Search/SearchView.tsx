@@ -15,12 +15,12 @@ type SearchingMovies = {
 interface SearchViewProps {
   t: LangI118Type
   searching: SearchingMovies
-  toggleDrawer: (status: boolean) => void
+  handleDrawer: (status: boolean) => void
   countItems: number
   loadMore: () => void
 }
 
-const SearchView: FC<SearchViewProps> = ({t, searching, toggleDrawer, countItems, loadMore}) => {
+const SearchView: FC<SearchViewProps> = ({t, searching, handleDrawer, countItems, loadMore}) => {
 
   return (
       <SearchData>
@@ -36,7 +36,7 @@ const SearchView: FC<SearchViewProps> = ({t, searching, toggleDrawer, countItems
                     <SearchFilm
                         t={t}
                         film={film}
-                        toggleDrawer={() => toggleDrawer(false)}
+                        toggleDrawer={() => handleDrawer(false)}
                         key={film.id}/>
                 )
               }) :
