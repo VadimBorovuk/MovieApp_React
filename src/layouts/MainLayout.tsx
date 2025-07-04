@@ -9,7 +9,7 @@ const MainLayout = () => {
   return (
       <div className="root-layout">
         <div className="content">
-          { isAuth ? <ContentView/> : <Navigate to="/login"/>}
+          {isAuth ? <ContentView/> : <Navigate to="/login"/>}
         </div>
       </div>
   );

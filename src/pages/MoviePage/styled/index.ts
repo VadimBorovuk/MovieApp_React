@@ -267,6 +267,11 @@ export const MovieVideo = styled.div`
             font-size: 20px;
         }
     }
+    .video-thumbnails {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+    }
 `
 
 export const CompanyStyled = styled.div`
