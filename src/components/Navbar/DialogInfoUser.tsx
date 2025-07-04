@@ -20,7 +20,6 @@ import PanteraAvatar from '../../assets/images/icons/BlackPantera.png'
 import WolfAvatar from '../../assets/images/icons/Wolfrine.png'
 import SpiderAvatar from '../../assets/images/icons/spiderman.png'
 import WonderWAvatar from '../../assets/images/icons/wonder-woman.png'
-import {useTranslation} from "react-i18next";
 import {LangI118Type} from "./Pages";
 
 const heroAvatars = [

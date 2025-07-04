@@ -2,12 +2,11 @@ import React, {FC, useState} from 'react';
 import {Alert, Grid, Snackbar} from "@mui/material";
 import Pagination from "../Pagination/Pagination";
 import CardMovie from "./CardMovie";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {MoviesResultsProps} from "../../redux/discoverMovies/types";
 import {AddFavoriteMovie, fetchFavoriteMovies} from "../../redux/favoriteMovies/asyncActions";
 import {useAppDispatch} from "../../redux/store";
-
 
 export type GenresProps = {
   id: number
@@ -27,7 +26,6 @@ const View: FC<ViewProps> = ({title, films, page, handlePagination, genres}) => 
   const [switchTitle, setSwitchTitle] = useState('')
   const {t} = useTranslation();
   const location = useLocation()
-  const navigate = useNavigate()
   const [message, setMessage] = useState(false)
 
   const dispatch = useAppDispatch()
