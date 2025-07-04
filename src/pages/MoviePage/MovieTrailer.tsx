@@ -17,7 +17,6 @@ const MovieTrailer: FC<MovieTrailerProps> = ({t, videos}) => {
 
   const firstVideo = videos.results?.[0];
 
-
   return (
       <MovieVideo>
         <p className="title">{t('t.key.movie.trailers')}</p>
