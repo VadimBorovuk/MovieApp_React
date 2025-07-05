@@ -17,7 +17,7 @@ const TrailerBtn: FC<TrailerBtnProps> = ({t, url, index, selectedUrl, onSelect})
           style={{
             background: selectedUrl === url ? "#ccc" : ""
           }}>
-        {t('t.key.movie.trailer')} {index + 1}
+        <span style={{fontSize: 10}}>{t('t.key.movie.trailer')} {index + 1}</span>
       </Button>
   );
 };
