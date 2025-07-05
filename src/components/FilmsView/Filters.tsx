@@ -61,19 +61,16 @@ const Filters: FC<FiltersProps> =
                 handleChange={handleChangeSort}
             />
             <ButtonStyled variant="contained"
-                          color="success"
                           onClick={() => showFilters()}>
               {t('t.filters.show')}
             </ButtonStyled>
 
-            <ButtonStyled variant="contained"
-                          color="error"
+            <ButtonStyled variant="outlined"
                           onClick={() => clearFilters()}>
               {t('t.filters.clear')}
             </ButtonStyled>
-
             {
-              (!!genreLabel || yearLabel || !!sortLabel) ?
+              (genreLabel.length > 0 || yearLabel || !!sortLabel.length) ?
                   <CopyToClipboard
                       style={{cursor: 'pointer'}}
                       text={window.location.href}

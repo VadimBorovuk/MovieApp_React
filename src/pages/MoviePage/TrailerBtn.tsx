@@ -7,14 +7,15 @@ type TrailerBtnProps = {
   index: number
   url: string
   selectedUrl: string | undefined
-  onClick: () => void
+  onSelect: (url: string | undefined) => void
 }
 
-const TrailerBtn: FC<TrailerBtnProps> = ({t, url, index,selectedUrl, onClick}) => {
+const TrailerBtn: FC<TrailerBtnProps> = ({t, url, index, selectedUrl, onSelect}) => {
   return (
       <Button
+          onClick={() => onSelect(url)}
           style={{
-            // background: selectedUrl === url ? "#ccc" : "#eee"
+            background: selectedUrl === url ? "#ccc" : ""
           }}>
         {t('t.key.movie.trailer')} {index + 1}
       </Button>

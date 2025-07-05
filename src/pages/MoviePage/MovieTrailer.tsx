@@ -4,7 +4,6 @@ import ReactPlayer from "react-player";
 import {LangI118Type} from "../../components/Navbar/Pages";
 import {VideosApi} from "../../redux/videoList/types";
 import {ButtonGroup} from "@mui/material";
-import Button from "@mui/material/Button";
 import TrailerBtn from "./TrailerBtn";
 
 type MovieTrailerProps = {
@@ -16,6 +15,9 @@ const MovieTrailer: FC<MovieTrailerProps> = ({t, videos}) => {
   const [selectedUrl, setSelectedUrl] = useState<string | undefined>(undefined);
 
   const firstVideo = videos.results?.[0];
+  const selectTrailer = (url: string | undefined) => {
+    setSelectedUrl(url)
+  }
 
   return (
       <MovieVideo>
@@ -35,26 +37,15 @@ const MovieTrailer: FC<MovieTrailerProps> = ({t, videos}) => {
               <div className="video-thumbnails">
                 <ButtonGroup size="large">
                   {videos.results.map((url, index) => (
-                      <button
+                      <TrailerBtn
+                          t={t}
+                          url={url}
                           key={index}
-                          onClick={() => setSelectedUrl(url)}
-                          style={{
-                            marginRight: 8,
-                            padding: 6,
-                            background: selectedUrl === url ? "#ccc" : "#eee",
-                          }}
-                      >
-                        {t('t.key.movie.trailer')} {index + 1}
-                      </button>
-                    ))}
-                  {/*    <TrailerBtn*/}
-                  {/*        key={index}*/}
-                  {/*        index={index}*/}
-                  {/*        selectedUrl={selectedUrl}*/}
-                  {/*        url={url}*/}
-                  {/*        onClick={() => setSelectedUrl(url)}*/}
-                  {/*        t={t}*/}
-                  {/*    />*/}
+                          index={index}
+                          selectedUrl={selectedUrl}
+                          onSelect={selectTrailer}
+                      />
+                  ))}
                 </ButtonGroup>
               </div>
             </>
